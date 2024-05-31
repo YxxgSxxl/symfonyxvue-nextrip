@@ -3,7 +3,7 @@
 
 <template>
     <div class="about">
-        <h1>About us</h1>
+        <h1>About <span class="blue-text">us</span></h1>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente cumque fuga, sint quas tempora culpa. Illum, enim iure similique sed non officia voluptatum id, fugiat minus quos, architecto quisquam minima.</p>
     </div>
 </template>

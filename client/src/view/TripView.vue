@@ -17,7 +17,7 @@ async function submitForm() {
 
 <template>
     <div class="trip">
-        <h1>Compare two cities</h1>
+        <h1>Compare two <span class="blue-text">cities</span></h1>
 
         <TripForm v-if="search" @search="submitForm" />
     </div>

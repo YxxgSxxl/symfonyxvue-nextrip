@@ -6,7 +6,7 @@ For this project, Symfony will handle API REST requests, VueJS will handle the f
 
 For VueJS, Typescript, SCSS, Normalize.CSS and Pinia will be used.
 
-Yarn is used for the client side Application
+Yarn is used to manage client side Application packages
 
 ## Run
 
