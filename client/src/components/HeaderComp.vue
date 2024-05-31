@@ -5,7 +5,7 @@
 <template>
     <header>
         <div class="header--logo">
-            <router-link to="/"><p>✈️ NexTrip</p></router-link>
+            <router-link to="/"><p>✈️ Nex<span class="blue-text">Trip</span></p></router-link>
         </div>
  
         <nav class="header--nav">

@@ -18,4 +18,9 @@ import HeaderComp from './components/HeaderComp.vue'
 body {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
+
+.blue-text {
+  color: #3e96bf;
+  font-weight: 600;
+}
 </style>
