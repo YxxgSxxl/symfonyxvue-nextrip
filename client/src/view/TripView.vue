@@ -8,8 +8,8 @@ let search: boolean = ref(true)
 
 async function submitForm() {
     console.log(search)
-    // search = false
-    // isLoading = true
+    search = false
+    isLoading = true
     
     // const req = await OpenWeatherMapService.getWeatherData(route.params.name) // 1st fetch to take the informations for the Weather Card comp
 }
