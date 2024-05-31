@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue' // Refs
+import axios from 'axios' // Axios Fetch
 import TripForm from '../components/TripForm.vue' // Trip Form component
 
 let isLoading: boolean = ref(false)
