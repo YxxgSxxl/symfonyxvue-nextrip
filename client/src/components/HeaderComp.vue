@@ -53,10 +53,10 @@ header {
     }
 
     .header--btn {
-        background-color: #7ed6ff;
+        background-color: #2ba8fb;
         padding: 4px 8px 4px 8px;
         border-radius: 12px;
-        color: black;
+        color: white;
     }
 }
 </style>
