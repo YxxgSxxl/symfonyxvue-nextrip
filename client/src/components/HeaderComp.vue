@@ -15,7 +15,7 @@
                 <li><button><router-link to="/chooseNextTrip" class="header--btn">Trip!</router-link></button></li>
             </ul>
         </nav>
-    </header>   
+    </header>
 </template>
 
 <style lang="scss" scoped>
