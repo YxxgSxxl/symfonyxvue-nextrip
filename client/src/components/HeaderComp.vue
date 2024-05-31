@@ -47,8 +47,15 @@ header {
         ul {
             list-style: none;
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
         }
+    }
+
+    .header--btn {
+        background-color: #60cdff;
+        padding: 4px 8px 4px 8px;
+        border-radius: 12px;
+        color: black;
     }
 }
 </style>
