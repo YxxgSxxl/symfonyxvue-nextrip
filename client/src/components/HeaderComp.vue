@@ -53,8 +53,8 @@ header {
     }
 
     .header--btn {
-        background-color: #006fb9;
-        color: white;
+        background-color: #101010;
+        color: #e1e1e1;
         padding: 4px 8px 4px 8px;
         border-radius: 12px;
     }
@@ -70,8 +70,8 @@ header {
 
         a.active,
         a.exact-active {
-            color: #e8f6ff;
-            background-color: #005d9b;
+            color: white;
+            background-color: #006fb9;
             font-weight: 400;
         }
     }
