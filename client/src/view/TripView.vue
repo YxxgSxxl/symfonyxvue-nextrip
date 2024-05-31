@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue' // Refs
-import axios from 'axios' // Axios Fetch
+import OpenWeatherMapService from '../services/openweathermap.service'; // Service
 import TripForm from '../components/TripForm.vue' // Trip Form component
 
 let isLoading: boolean = ref(false)
 let search: boolean = ref(true)
 
 async function submitForm() {
-    // search = false
+    // console.log("sdzf")
+    search = false
     isLoading = true
-    console.log("sdzf")
+    
+    // const req = await OpenWeatherMapService.getWeatherData(route.params.name) // 1st fetch to take the informations for the Weather Card comp
 }
 </script>
 
