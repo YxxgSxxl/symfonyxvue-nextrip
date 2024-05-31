@@ -1,4 +1,4 @@
-# Symfony7 & Vue3 API project
+# ✈️ NexTrip !
 
 This project is to make me learn symfony 7.
 
