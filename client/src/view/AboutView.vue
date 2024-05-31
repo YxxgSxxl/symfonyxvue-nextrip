@@ -2,8 +2,8 @@
 </script>
 
 <template>
-    <div class="trip">
-        <h1>Trip Page</h1>
+    <div class="about">
+        <h1>About Page</h1>
     </div>
 </template>
 

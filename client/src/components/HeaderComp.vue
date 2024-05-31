@@ -5,7 +5,7 @@
 <template>
     <header>
         <div class="header--logo">
-            <a href="/"><p>✈️ NexTrip</p></a>
+            <router-link to="/"><p>✈️ NexTrip</p></router-link>
         </div>
  
         <nav class="header--nav">
@@ -33,6 +33,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 2rem;
 
     a {
         color: black;
