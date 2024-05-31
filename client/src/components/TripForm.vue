@@ -3,7 +3,8 @@ let city1: string = ""
 let city2: string = ""
 
 function submitForm() {
-    alert(this.city1 + this.city2)
+    // alert(this.city1 + this.city2)
+    emit('search', [city1, city2]);
 }
 </script>
 
