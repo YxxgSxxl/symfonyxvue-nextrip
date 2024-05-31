@@ -12,7 +12,7 @@ let result: Array = ref([])
 function submitForm() {
     // alert(this.city1 + this.city2)
     
-    emit('search', city1);
+    emit('search', { c1: this.city1, c2: this.city2 });
 
     result.value.push(this.city1, this.city2)
 }

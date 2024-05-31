@@ -7,9 +7,9 @@ let isLoading: boolean = ref(false)
 let search: boolean = ref(true)
 
 async function submitForm() {
-    // console.log("sdzf")
-    search = false
-    isLoading = true
+    console.log(search)
+    // search = false
+    // isLoading = true
     
     // const req = await OpenWeatherMapService.getWeatherData(route.params.name) // 1st fetch to take the informations for the Weather Card comp
 }
