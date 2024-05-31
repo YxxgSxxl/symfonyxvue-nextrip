@@ -5,24 +5,24 @@
 <template>
     <header>
         <div class="header--logo">
-            <a href="/"><p>LOGO</p></a>
+            <a href="/"><p>✈️ NexTrip</p></a>
         </div>
-
+ 
         <nav class="header--nav">
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><router-link to="/">Home</router-link></li>
+                <li><router-link to="/about">About</router-link></li>
+                <li><router-link to="/chooseNextTrip"><span class="header--btn">Trip!</span></router-link></li>
             </ul>
         </nav>
-    </header>
+    </header>   
 </template>
 
 <style lang="scss" scoped>
 header {
     width: 100%;
     height: 20px;
-    padding: 2rem 6rem 2rem 6rem;
+    padding: 2rem;
 
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
