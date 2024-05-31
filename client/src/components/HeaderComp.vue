@@ -52,7 +52,7 @@ header {
     }
 
     .header--btn {
-        background-color: #60cdff;
+        background-color: #7ed6ff;
         padding: 4px 8px 4px 8px;
         border-radius: 12px;
         color: black;
