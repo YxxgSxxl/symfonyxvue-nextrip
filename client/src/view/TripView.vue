@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import TripForm from '../components/TripForm.vue'
 </script>
 
 <template>
     <div class="trip">
-        <h1>Trip Page</h1>
+        <h1>Compare two cities</h1>
+
+        <TripForm />
     </div>
 </template>
 

@@ -9,7 +9,7 @@ import BlueBtn from '../components/BlueButton.vue'
         <div class="home-line">
             <p class="home--p1">Do you want to travel next days?</p>
             <p class="home--p2">You can <span class="blue-text">compare</span> two detinations</p>
-            <BlueBtn name="Here" icon="/" />
+            <BlueBtn name="Compare" icon="/" />
         </div>
 
 
@@ -32,7 +32,7 @@ h1 {
     }
 
     &--p1 {
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
 
     &--p2 {

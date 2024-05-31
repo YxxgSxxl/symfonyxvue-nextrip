@@ -1,6 +1,6 @@
 # ✈️ NexTrip !
 
-This project is to make me learn symfony 7.
+This project is to make me learn symfony 7 API REST.
 
 For this project, Symfony will handle API REST requests, VueJS will handle the front-end interface.
 

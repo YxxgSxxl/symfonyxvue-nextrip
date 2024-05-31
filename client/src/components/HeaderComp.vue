@@ -58,5 +58,12 @@ header {
         border-radius: 12px;
         color: white;
     }
+
+    nav li:hover,
+ nav ul li.router-link-active,
+ nav ul li.router-link-exact-active {
+   background-color: indianred;
+   cursor: pointer;
+ }
 }
 </style>
