@@ -19,6 +19,11 @@ body {
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
+.black-text {
+  color: #000000;
+  font-weight: 500;
+}
+
 .blue-text {
   color: #3e96bf;
   font-weight: 600;

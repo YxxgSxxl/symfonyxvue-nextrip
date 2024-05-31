@@ -3,17 +3,17 @@ let city1: string = ""
 let city2: string = ""
 
 function submitForm() {
-    alert("g,fhnfnfb")
+    alert(this.city1 + this.city2)
 }
 </script>
 
 <template>
     <form class="tripform">
         <div class="tripform-container">
-            <input type="text" name="" id="" v-model="city1">
-            <p>Or</p>
-            <input type="text" name="" id="" v-model="city2">
-            <input type="submit" value="Show Results" @submit="submitForm()">
+            <input type="text" name="" id="" v-model.trim="city1" placeholder="First city">
+            <p>And</p>
+            <input type="text" name="" id="" v-model.trim="city2" placeholder="Second city">
+            <input type="submit" value="Show Results" @click="submitForm()" @keydown.enter="submitForm()">
         </div>
     </form>
 </template>
@@ -25,6 +25,7 @@ function submitForm() {
         background-color: rgba($color: #000000, $alpha: .1);
         display: flex;
         flex-direction: column;
+        gap: 1rem;
         width: 80%;
         padding: 2rem 1.5rem 2rem 1.5rem;
         border-radius: 15px;

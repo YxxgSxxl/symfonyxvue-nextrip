@@ -5,14 +5,14 @@
 <template>
     <header>
         <div class="header--logo">
-            <router-link to="/"><p>✈️ Nex<span class="blue-text">Trip</span></p></router-link>
+            <router-link to="/"><p><span class="black-text">✈️ Nex</span><span class="blue-text">Trip</span></p></router-link>
         </div>
  
         <nav class="header--nav">
             <ul>
                 <li><router-link to="/">Home</router-link></li>
                 <li><router-link to="/about">About</router-link></li>
-                <li><router-link to="/chooseNextTrip"><span class="header--btn">Trip!</span></router-link></li>
+                <li><button><router-link to="/chooseNextTrip" class="header--btn">Trip!</router-link></button></li>
             </ul>
         </nav>
     </header>   
@@ -53,17 +53,27 @@ header {
     }
 
     .header--btn {
-        background-color: #2ba8fb;
+        background-color: #006fb9;
+        color: white;
         padding: 4px 8px 4px 8px;
         border-radius: 12px;
-        color: white;
     }
 
-    nav li:hover,
- nav ul li.router-link-active,
- nav ul li.router-link-exact-active {
-   background-color: indianred;
-   cursor: pointer;
- }
+    a.active,
+    a.exact-active {
+        color: #3e96bf;
+        font-weight: bold;
+    }
+
+    li button {
+        border: none;
+
+        a.active,
+        a.exact-active {
+            color: #e8f6ff;
+            background-color: #005d9b;
+            font-weight: 400;
+        }
+    }
 }
 </style>
