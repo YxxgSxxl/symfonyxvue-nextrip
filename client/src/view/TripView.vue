@@ -6,14 +6,25 @@ import TripForm from '../components/TripForm.vue' // Trip Form component
 let isLoading: boolean = ref(false)
 let search: boolean = ref(true)
 
+// fetch('http://127.0.0.1:8000/api', {
+//     mode : 'no-cors'
+// })
+// .then(res => {
+//     console.log(res);
+// })
+
 async function submitForm(query: String) {
     search = false
     isLoading = true
     // console.log(search)
-    const req = await OpenWeatherMapService.getWeatherData(query.value[0], query.value[1]) // 1st fetch to take the informations for the Weather Card comp
+    const weatherData = await OpenWeatherMapService.getWeatherData(query.value[0], query.value[1]) // 1st fetch to take the informations for the Weather Card comp
+
+    console.log(weatherData);
     
-    // console.log(query.value[0])
-    console.log(req)    
+
+    // const weatherDataFull = await OpenWeatherMapService.getWeatherDataFull(weatherData.coord.lat, weatherData.coord.lon, weatherData.coord.lat, weatherData.coord.lon)
+
+    // console.log(weatherDataFull);
 }
 </script>
 
