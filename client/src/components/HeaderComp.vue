@@ -62,7 +62,7 @@ header {
     a.active,
     a.exact-active {
         color: #3e96bf;
-        font-weight: bold;
+        font-weight: 400;
     }
 
     li button {

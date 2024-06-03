@@ -38,5 +38,11 @@ h1 {
     &--p2 {
         margin-bottom: 0.6rem;
     }
+
+    .home-line {
+        margin-right: auto;
+        margin-left: auto;
+        width: fit-content;
+    }
 }
 </style>
