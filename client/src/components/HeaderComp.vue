@@ -25,7 +25,7 @@ header {
     padding: 2rem;
 
     background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(3.9px);
     -webkit-backdrop-filter: blur(3.9px);
     border: 1px solid rgba(255, 255, 255, 0.45);
@@ -62,7 +62,7 @@ header {
     a.active,
     a.exact-active {
         color: #3e96bf;
-        font-weight: 400;
+        font-weight: 500;
     }
 
     li button {

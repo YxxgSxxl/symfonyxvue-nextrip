@@ -23,7 +23,7 @@ function submitForm() {
             <p>And</p>
             <input type="text" name="" id="" v-model.trim="city2" placeholder="Second city">
             <input type="submit" value="Show Results" @click="submitForm()" @keydown.enter="submitForm()">
-            {{ result }}
+            <!-- {{ result }} -->
         </div>
     </form>
 </template>
@@ -31,7 +31,7 @@ function submitForm() {
 <style lang="scss" scoped>
 .tripform {
     &-container {
-        background-color: rgba($color: #000000, $alpha: .05);
+        background-color: rgba($color: #000000, $alpha: .03);
         display: flex;
         flex-direction: column;
         gap: 1rem;

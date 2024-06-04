@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue' // Refs
-import axios from 'axios'
+import axios from 'axios' // Axios
 import TripForm from '../components/TripForm.vue' // Trip Form component
+import TripCard from '../components/TripCard.vue' // Trip Card component
 
+let title = ref("Compare two cities")
 let isLoading: any = ref(false)
 let search: any = ref(true)
+let searched: any = ref(false)
 let error: any = ref("")
-// let isError: any = ref(false)
 let data_weather: any = ref([]);
 
-let message: any = ref({})
 
 async function submitForm(query: String) {
     search.value = false
@@ -17,40 +18,39 @@ async function submitForm(query: String) {
     
     
     await axios.get(`http://127.0.0.1:8000/api/${query.value[0].value}/${query.value[1].value}`, {
-        // headers: {
-        //     "Content-Type": "application/json",
-        //     'Access-Control-Allow-Origin': '*',
-        // }
     })
     .then(res => {
-        // console.log("ici", res.json());
         return res
     })
     .then(json => {
-        console.log(json);
-        message.value = json
         isLoading.value = false
+        searched.value = true
 
         data_weather.value = json
+        // json = data_weather.value
+        // console.log(json.data[0]);
+        // console.log(data_weather.value.data[0]);
+        title.value = "Results"
         return data_weather
     })
     // Catches Axios errors (like blank query)
     .catch(err => {
-        // isError.value = true
         error.value = err
-    })        
+    })
 }
+
+
 </script>
 
 <template>
     <div class="trip">
-        <h1>Compare two <span class="blue-text">cities</span></h1>
+        <h1>{{ title }}</h1>
 
         <TripForm v-if="search" @search="submitForm" />
 
-        {{ message?.data }}
-
-        <span style="color: yellowgreen;">{{ data_weather?.data?.city2 }}</span>
+        <div class="trip-cwrapper">
+            <TripCard v-if="searched" v-for="(data, i) in data_weather.data[0]" :key="i" :weatherData="data" />
+        </div>
 
         <div class="weather-error">
             {{ error }}
@@ -59,8 +59,19 @@ async function submitForm(query: String) {
 </template>
 
 <style lang="scss" scoped>
-.weather-error {
-    color: red;
-    text-align: center;
+.trip {
+    padding: 0 2rem 0 2rem;
+    align-items: center;
+
+    .weather-error {
+        color: red;
+        text-align: center;
+    }
+
+    &-cwrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
 }
 </style>
