@@ -4,20 +4,20 @@ import { ref } from 'vue' // Refs
 import axios from 'axios'
 import TripForm from '../components/TripForm.vue' // Trip Form component
 
-let isLoading = ref(false)
-let search = ref(true)
-let error = ref("")
-// let isError = ref(false)
-let data_weather = ref([]);
+let isLoading: any = ref(false)
+let search: any = ref(true)
+let error: any = ref("")
+// let isError: any = ref(false)
+let data_weather: any = ref([]);
 
-let message = ref({})
+let message: any = ref({})
 
 async function submitForm(query: String) {
     data_weather.value = [];
     search.value = false
     isLoading.value = true
     
-    const api = await axios.get(`http://127.0.0.1:8000/api/${query.value[0].value}/${query.value[1].value}`, {
+    await axios.get(`http://127.0.0.1:8000/api/${query.value[0].value}/${query.value[1].value}`, {
         headers: { 'Content-Type': 'application/json' }
     })
     .then(res => {
