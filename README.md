@@ -8,7 +8,7 @@ For VueJS, Typescript, SCSS, Normalize.CSS and Pinia will be used.
 
 Yarn is used to manage client side Application packages
 
-## Run
+## Rundev
 
 To run vue:
 
