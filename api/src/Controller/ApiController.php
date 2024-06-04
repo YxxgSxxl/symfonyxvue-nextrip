@@ -32,7 +32,6 @@ class ApiController extends AbstractController
         $cities = [json_decode($query1), json_decode($query2)];
 
         $responseArray['cities'] = $cities; // Cities
-        $responseArray['test'] = "malabar";
         $responseArray['winner'] = "";
 
         // dd($responseArray);
