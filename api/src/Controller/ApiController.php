@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -28,13 +29,42 @@ class ApiController extends AbstractController
         // $query2->headers->set('Access-Control-Allow-Origin', '*');
         // dd($query1, $query2);
 
+
+        // foreach ($query1 as $key => $value) {
+        //     $tot = $key;
+        // }
+
+        // dd($contents);
+
         // $response = new Response();
         // $response->headers->set('Access-Control-Allow-Origin', '*');
         return $this->json([
             'city1' => $query1,
             'city2' => $query2,
-            'winner' => 'The winner is ' . $city2 . ' !',
+            // 'winner' => 'The winner is ' . $city2 . ' !',
             // 'path' => 'src/Controller/ApiController.php',
         ]);
     }
+
+    // #[Route('/api/{city1}/{city2}', name: 'app_api', requirements: ['city1' => '[a-z]+', 'city2' => '[a-z]+'])]
+    // public function compare(string $city1, string $city2, Request $request): Response
+    // {
+    //     // FETCH OpenWeather map API here
+    //     $url_base = "https://api.openweathermap.org/data/2.5/";
+    //     $api_key = "95542917d76459372397547a96610cd8";
+
+    //     $ch = curl_init();
+
+    //     curl_setopt($ch, CURLOPT_URL, $url_base . "weather?q=" . $city1 . "&units=metric&appid=" . $api_key);
+
+    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    //     $contents = curl_exec($ch);
+
+    //     dd($request);
+
+    //     // return $this->render('', [
+    //     // "render" => 'contents',
+    //     // ])
+    // }
 }
