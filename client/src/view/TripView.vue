@@ -49,7 +49,7 @@ async function submitForm(query: String) {
         <TripForm v-if="search" @search="submitForm" />
 
         <div class="trip-cwrapper">
-            <TripCard v-if="searched" v-for="(data, i) in data_weather.data[0]" :key="i" :weatherData="data" />
+            <TripCard v-if="searched" v-for="(data, i) in data_weather.data.cities" :key="i" :weatherData="data" />
         </div>
 
         <div class="weather-error">

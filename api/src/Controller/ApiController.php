@@ -13,6 +13,7 @@ class ApiController extends AbstractController
     #[Route('/api/{city1}/{city2}', name: 'app_api')]
     public function compare(string $city1, string $city2): JsonResponse
     {
+        $responseArray = [];
         // FETCH OpenWeather map API here
         $url_base = "https://api.openweathermap.org/data/2.5/";
         $api_key = "95542917d76459372397547a96610cd8";
@@ -30,7 +31,10 @@ class ApiController extends AbstractController
         // dd($query1, $query2);
         $cities = [json_decode($query1), json_decode($query2)];
 
-        // dd($cities);
+        $responseArray['cities'] = $cities; // Cities
+        $responseArray['test'] = "malabar";
+
+        // dd($responseArray);
 
         // foreach ($query1 as $key => $value) {
         //     $tot = $key;
@@ -40,7 +44,7 @@ class ApiController extends AbstractController
 
         // $response = new Response();
         // $response->headers->set('Access-Control-Allow-Origin', '*');
-        return $this->json([$cities]);
+        return $this->json($responseArray);
         // 'city1' => json_decode($query1),
         // 'city2' => json_decode($query2),
 
