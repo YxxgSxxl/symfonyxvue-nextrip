@@ -17,12 +17,12 @@ async function submitForm(query: String) {
     search.value = false
     isLoading.value = true
     
+    
     await axios.get(`http://127.0.0.1:8000/api/${query.value[0].value}/${query.value[1].value}`, {
-        headers: { 
-            'Content-Type': 'application/json',
-            mode: 'no-cors',
-            dataType: 'jsonp',
-         }
+        // headers: {
+        //     "Content-Type": "application/json",
+        //     'Access-Control-Allow-Origin': '*',
+        // }
     })
     .then(res => {
         // console.log("ici", res.json());

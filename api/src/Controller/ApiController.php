@@ -26,13 +26,15 @@ class ApiController extends AbstractController
         // $query1->headers->set('Access-Control-Allow-Origin', '*');
         $query2 = file_get_contents($url_base . "weather?q=" . $city2 . "&units=metric&appid=" . $api_key, true);
         // $query2->headers->set('Access-Control-Allow-Origin', '*');
-        dd($query1, $query2);
+        // dd($query1, $query2);
 
         $response = new Response();
-        $response->headers->set('Access-Control-Allow-Origin', '*');
+        // $response->headers->set('Access-Control-Allow-Origin', '*');
         return $this->json([
+            'city1' => $query1,
+            'city2' => $query2,
             'winner' => 'The winner is ' . $city2 . ' !',
-            'path' => 'src/Controller/ApiController.php',
+            // 'path' => 'src/Controller/ApiController.php',
         ]);
     }
 }
