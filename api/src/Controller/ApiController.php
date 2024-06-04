@@ -23,32 +23,20 @@ class ApiController extends AbstractController
         //     exit;
         // }
 
-        // $query1 = new Response();
+        // OpenWeatherMap API Calls
         $query1 = file_get_contents($url_base . "weather?q=" . $city1 . "&units=metric&appid=" . $api_key, true);
-        // $query1->headers->set('Access-Control-Allow-Origin', '*');
         $query2 = file_get_contents($url_base . "weather?q=" . $city2 . "&units=metric&appid=" . $api_key, true);
-        // $query2->headers->set('Access-Control-Allow-Origin', '*');
-        // dd($query1, $query2);
+        $query3 = null;
+        $query4 = null;
+
         $cities = [json_decode($query1), json_decode($query2)];
 
         $responseArray['cities'] = $cities; // Cities
         $responseArray['test'] = "malabar";
+        $responseArray['winner'] = "";
 
         // dd($responseArray);
 
-        // foreach ($query1 as $key => $value) {
-        //     $tot = $key;
-        // }
-
-        // dd($cities);
-
-        // $response = new Response();
-        // $response->headers->set('Access-Control-Allow-Origin', '*');
         return $this->json($responseArray);
-        // 'city1' => json_decode($query1),
-        // 'city2' => json_decode($query2),
-
-        // 'winner' => 'The winner is ' . $city2 . ' !',
-        // 'path' => 'src/Controller/ApiController.php',
     }
 }
