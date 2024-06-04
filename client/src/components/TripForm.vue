@@ -3,11 +3,10 @@ import { defineEmits, ref } from 'vue';
 
 let emit = defineEmits(['search'])
 
-let city1: string = ref("")
-let city2: string = ref("")
+let city1: any = ref("")
+let city2: any = ref("")
 
-let result: Array = ref([])
-
+let result: any = ref([])
 
 function submitForm() {
     // alert(this.city1 + this.city2)
@@ -18,7 +17,7 @@ function submitForm() {
 </script>
 
 <template>
-    <form class="tripform">
+    <form class="tripform" method="post">
         <div class="tripform-container">
             <input type="text" name="" id="" v-model.trim="city1" placeholder="First city">
             <p>And</p>

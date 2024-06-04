@@ -12,7 +12,6 @@ const routes = [
     { path: '/', component: HomeView },
     { path: '/about', component: AboutView },
     { path: '/chooseNextTrip', component: TripView },
-    // { path: '/chooseNextTrip/:city1/:city2', component: TripResView }
 ]
 
 // Router

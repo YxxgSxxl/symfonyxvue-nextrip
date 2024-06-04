@@ -22,9 +22,10 @@ class ApiController extends AbstractController
         }
 
         // $query1 = new Response();
-        // $query1->headers->set('Access-Control-Allow-Origin', '*');
         $query1 = file_get_contents($url_base . "weather?q=" . $city1 . "&units=metric&appid=" . $api_key, true);
+        // $query1->headers->set('Access-Control-Allow-Origin', '*');
         $query2 = file_get_contents($url_base . "weather?q=" . $city2 . "&units=metric&appid=" . $api_key, true);
+        // $query2->headers->set('Access-Control-Allow-Origin', '*');
         dd($query1, $query2);
 
         $response = new Response();
