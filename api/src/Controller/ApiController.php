@@ -68,11 +68,12 @@ class ApiController extends AbstractController
                 //     // dd($responseArray['citiesAll'][0]->list[$i]->main->temp);
                 // }
 
+                // First city total
                 $total = 0;
                 $total += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
                 $cit1moy = $total / $listSize;
-                // dd($total, $cit1moy);
 
+                // Second city total
                 $total = 0;
                 $total += $responseArray['citiesAll'][1]->list[$i]->main->temp * $listSize;
                 $cit2moy = $total / $listSize;
@@ -82,13 +83,8 @@ class ApiController extends AbstractController
 
                 // Clourds rate check
             }
-            dd('');
-
+            // dd('');
             // dd($listSize);
-
-            // for ($i = 0; $i < $listSize; $i++) {
-            //     print_r($responseArray['citiesAll'][0]->list[$i]->main->temp);
-            // }
         } else {
             null;
         }
