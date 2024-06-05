@@ -16,7 +16,7 @@ class ApiController extends AbstractController
         $responseArray = [];
         // FETCH OpenWeather map API here
         $url_base = "https://api.openweathermap.org/data/2.5/";
-        $api_key = "95542917d76459372397547a96610cd8";
+        $api_key = $this->getParameter("API_KEY");
 
         // if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         //     http_response_code(200);
