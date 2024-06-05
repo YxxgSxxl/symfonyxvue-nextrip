@@ -49,10 +49,34 @@ class ApiController extends AbstractController
         $points['city2'] = 0;
 
         if ($responseArray['cities'][0]->name == $responseArray['citiesAll'][0]->city->name) {
-            $points['city1'] = 10;
-            dd('success!', $points);
+            // $points['city1'] = 10;
+            // dd('success!', $points);
+
+            $listSize = count($responseArray['citiesAll'][0]->list);
+
+            for ($i = 0; $i < $listSize - 1; $i++) {
+                if ($responseArray['citiesAll'][0]->list[$i]->main->temp == $responseArray['citiesAll'][1]->list[$i]->main->temp) {
+                    dd('SAMEEEE');
+                } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp > 27) {
+                    print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: red">chaud</span> que 27°C de ' . $responseArray['citiesAll'][0]->list[$i]->main->temp - 27 . "°C.<br>");
+                    // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
+                } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp < 27) {
+                    print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: lightblue">froid</span> que 27°C de ' . 27 - $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C.<br>");
+                    // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
+                } else {
+                    // dd('DIFFERENT');
+                    // dd($responseArray['citiesAll'][0]->list[$i]->main->temp);
+                }
+            }
+            dd('');
+
+            // dd($listSize);
+
+            // for ($i = 0; $i < $listSize; $i++) {
+            //     print_r($responseArray['citiesAll'][0]->list[$i]->main->temp);
+            // }
         } else {
-            dd('nooo');
+            null;
         }
 
         $responseArray['winner'] = ""; // Winners
