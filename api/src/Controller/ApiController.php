@@ -33,6 +33,7 @@ class ApiController extends AbstractController
 
         $responseArray['cities'] = $cities; // Cities
         $responseArray['winner'] = "";
+        // $responseArray['api_key'] = $this->getParameter("API_KEY_SECRET");
 
         // dd($responseArray);
 
