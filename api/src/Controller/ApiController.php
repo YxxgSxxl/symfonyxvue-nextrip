@@ -44,29 +44,36 @@ class ApiController extends AbstractController
         // dd();
 
         // Algorythm
-        $points = [];
-        $points['city1'] = 0;
-        $points['city2'] = 0;
+        $compareData = [];
+        $compareData['city1'] = ['temp' => null, 'humidity' => null, 'cloud' => null, 'score' => 0];
+        $compareData['city2'] = ['temp' => null, 'humidity' => null, 'cloud' => null, 'score' => 0];
 
+        // if the city name of the first queries are the same
         if ($responseArray['cities'][0]->name == $responseArray['citiesAll'][0]->city->name) {
-            // $points['city1'] = 10;
-            // dd('success!', $points);
+            $listSize = count($responseArray['citiesAll'][0]->list); // size of the array
 
-            $listSize = count($responseArray['citiesAll'][0]->list);
+            // For loop that goes all the way up the array
+            for ($i = 0; $i < $listSize; $i++) {
+                // Temperature check
+                // if ($responseArray['citiesAll'][0]->list[$i]->main->temp == $responseArray['citiesAll'][1]->list[$i]->main->temp) {
+                //     dd('SAMEEEE');
+                // } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp > 27) {
+                //     print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: red">chaud</span> que 27°C de ' . $responseArray['citiesAll'][0]->list[$i]->main->temp - 27 . "°C.<br>");
+                //     // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
+                // } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp < 27) {
+                //     print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: lightblue">froid</span> que 27°C de ' . 27 - $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C.<br>");
+                //     // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
+                // } else {
+                //     // dd('DIFFERENT');
+                //     // dd($responseArray['citiesAll'][0]->list[$i]->main->temp);
+                // }
 
-            for ($i = 0; $i < $listSize - 1; $i++) {
-                if ($responseArray['citiesAll'][0]->list[$i]->main->temp == $responseArray['citiesAll'][1]->list[$i]->main->temp) {
-                    dd('SAMEEEE');
-                } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp > 27) {
-                    print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: red">chaud</span> que 27°C de ' . $responseArray['citiesAll'][0]->list[$i]->main->temp - 27 . "°C.<br>");
-                    // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
-                } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp < 27) {
-                    print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: lightblue">froid</span> que 27°C de ' . 27 - $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C.<br>");
-                    // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
-                } else {
-                    // dd('DIFFERENT');
-                    // dd($responseArray['citiesAll'][0]->list[$i]->main->temp);
-                }
+                $total = 0;
+                $total += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
+                $moyenne = $total / $listSize;
+                dd($total, $moyenne);
+                // Humidity check
+                // Clourds rate check
             }
             dd('');
 
