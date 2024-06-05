@@ -27,16 +27,35 @@ class ApiController extends AbstractController
         // OpenWeatherMap API Calls
         $query1 = file_get_contents($url_base . "weather?q=" . $city1 . "&units=metric&appid=" . $api_key, true);
         $query2 = file_get_contents($url_base . "weather?q=" . $city2 . "&units=metric&appid=" . $api_key, true);
-        $query3 = null;
-        $query4 = null;
 
         $cities = [json_decode($query1), json_decode($query2)];
 
+        $query3 = file_get_contents($url_base . "forecast?lat=" . $cities[0]->coord->lat . "&lon=" . $cities[0]->coord->lon . "&units=metric&appid=" . $api_key, true);
+        $query4 = file_get_contents($url_base . "forecast?lat=" . $cities[1]->coord->lat . "&lon=" . $cities[1]->coord->lon . "&units=metric&appid=" . $api_key, true);
+
+        $citiesAll = [json_decode($query3), json_decode($query4)];
+
+        // dd($cities, $cities[0]->base, $cities[1]->main->temp, $citiesAll[0]->list);
+
         $responseArray['cities'] = $cities; // Cities
-        $responseArray['winner'] = "";
+        $responseArray['citiesAll'] = $citiesAll; // Cities full informations (5 days long)
         // $responseArray['api_key'] = $parameterBag->get("API_KEY_SECRET");
 
-        // dd($responseArray);
+        // dd();
+
+        // Algorythm
+        $points = [];
+        $points['city1'] = 0;
+        $points['city2'] = 0;
+
+        if ($responseArray['cities'][0]->name == $responseArray['citiesAll'][0]->city->name) {
+            $points['city1'] = 10;
+            dd('success!', $points);
+        } else {
+            dd('nooo');
+        }
+
+        $responseArray['winner'] = ""; // Winners
 
         return $this->json($responseArray);
     }
