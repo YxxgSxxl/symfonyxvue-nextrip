@@ -70,9 +70,16 @@ class ApiController extends AbstractController
 
                 $total = 0;
                 $total += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
-                $moyenne = $total / $listSize;
-                dd($total, $moyenne);
+                $cit1moy = $total / $listSize;
+                // dd($total, $cit1moy);
+
+                $total = 0;
+                $total += $responseArray['citiesAll'][1]->list[$i]->main->temp * $listSize;
+                $cit2moy = $total / $listSize;
+                dd($cit1moy, $cit2moy);
+
                 // Humidity check
+
                 // Clourds rate check
             }
             dd('');
