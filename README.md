@@ -52,13 +52,13 @@ php bin/console secrets:list --reveal
 
 ## Rundev
 
-To run symfony (symfonyxvue-nextrip/api):
+To run symfony back-end (symfonyxvue-nextrip/api):
 
 ```
 symfony server:start
 ```
 
-To run vue (symfonyxvue-nextrip/client):
+To run vue front-end (symfonyxvue-nextrip/client):
 
 ```
 yarn run dev
