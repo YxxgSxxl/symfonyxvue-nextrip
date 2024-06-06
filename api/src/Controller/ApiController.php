@@ -96,14 +96,13 @@ class ApiController extends AbstractController
             $compare->calculateOffset($cit2tempmoy, $totaltemp1, 27);
 
             // if cit1tempmoy value is below 0, make it positive
-            if ($cit1tempmoy < 0) {
-                $cit1tempmoy = $cit1tempmoy * -1;
-            }
+            // if ($cit2tempmoy < 0) {
+            //     $cit2tempmoy = $cit2tempmoy * -1;
+            // }
+            $compare->ifValBelowZero($cit1tempmoy);
 
             // if cit2tempmoy value is below 0, make it positive
-            if ($cit2tempmoy < 0) {
-                $cit2tempmoy = $cit2tempmoy * -1;
-            }
+            $compare->ifValBelowZero($cit2tempmoy);
 
             // inject average values of temp
             $compareData['city1']['temp'] = $cit1tempmoy;
@@ -128,14 +127,10 @@ class ApiController extends AbstractController
             $compare->calculateOffset($cit2hummoy, $totaltemp1, 60);
 
             // if cit1hummoy value is below 0, make it positive
-            if ($cit1hummoy < 0) {
-                $cit1hummoy = $cit1hummoy * -1;
-            }
+            $compare->ifValBelowZero($cit1hummoy);
 
             // if cit2hummoy value is below 0, make it positive
-            if ($cit2hummoy < 0) {
-                $cit2hummoy = $cit2hummoy * -1;
-            }
+            $compare->ifValBelowZero($cit2hummoy);
 
             // inject average values of hum
             $compareData['city1']['humidity'] = $cit1hummoy;
@@ -160,14 +155,10 @@ class ApiController extends AbstractController
             $compare->calculateOffset($cit2clmoy, $totaltemp1, 15);
 
             // if cit1clmoy value is below 0, make it positive
-            if ($cit1clmoy < 0) {
-                $cit1clmoy = $cit1clmoy * -1;
-            }
+            $compare->ifValBelowZero($cit1clmoy);
 
             // if cit2clmoy value is below 0, make it positive
-            if ($cit2clmoy < 0) {
-                $cit2clmoy = $cit2clmoy * -1;
-            }
+            $compare->ifValBelowZero($cit2clmoy);
 
             // inject average values of hum
             $compareData['city1']['clouds'] = $cit1clmoy;
