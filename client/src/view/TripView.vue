@@ -11,6 +11,7 @@ let isLoading: any = ref(false) // Loading bool
 let search: any = ref(true) // Search bool
 let searched: any = ref(false) // Search done bool
 let error: any = ref("") // Error message value
+let isError: any = ref(false);
 let data_weather: any = ref([]); // Weather data Array
 
 
@@ -36,6 +37,8 @@ async function submitForm(query: String) {
     })
     // Catches Axios errors (like blank query)
     .catch(err => {
+        isError.value = true
+        isLoading.value = false
         error.value = err
     })
 }
@@ -46,9 +49,15 @@ async function submitForm(query: String) {
         <h1>{{ title }}</h1>
         
         <TripForm v-if="search" @search="submitForm" />
+
+        <div class="trip-loading" v-if="isLoading">
+            <!-- Loading icon from https://loading.io/css/ -->
+            <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
         
-        <div class="weather-error">
+        <div class="weather-error" v-if="isError">
             {{ error }}
+            <router-link to="/">Homepage</router-link>
         </div>
             
         <div class="trip-debug" v-if="searched">
@@ -76,6 +85,105 @@ async function submitForm(query: String) {
     .weather-error {
         color: red;
         text-align: center;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .trip-loading {
+        margin-top: 6rem;
+        color: #006fb9;
+        text-align: center;
+        align-items: center;
+
+        // LOADING ICON from https://loading.io/css/
+        .lds-default,
+        .lds-default div {
+          box-sizing: border-box;
+        }
+        .lds-default {
+          display: inline-block;
+          position: relative;
+          width: 80px;
+          height: 80px;
+        }
+        .lds-default div {
+          position: absolute;
+          width: 6.4px;
+          height: 6.4px;
+          background: currentColor;
+          border-radius: 50%;
+          animation: lds-default 1.2s linear infinite;
+        }
+        .lds-default div:nth-child(1) {
+          animation-delay: 0s;
+          top: 36.8px;
+          left: 66.24px;
+        }
+        .lds-default div:nth-child(2) {
+          animation-delay: -0.1s;
+          top: 22.08px;
+          left: 62.29579px;
+        }
+        .lds-default div:nth-child(3) {
+          animation-delay: -0.2s;
+          top: 11.30421px;
+          left: 51.52px;
+        }
+        .lds-default div:nth-child(4) {
+          animation-delay: -0.3s;
+          top: 7.36px;
+          left: 36.8px;
+        }
+        .lds-default div:nth-child(5) {
+          animation-delay: -0.4s;
+          top: 11.30421px;
+          left: 22.08px;
+        }
+        .lds-default div:nth-child(6) {
+          animation-delay: -0.5s;
+          top: 22.08px;
+          left: 11.30421px;
+        }
+        .lds-default div:nth-child(7) {
+          animation-delay: -0.6s;
+          top: 36.8px;
+          left: 7.36px;
+        }
+        .lds-default div:nth-child(8) {
+          animation-delay: -0.7s;
+          top: 51.52px;
+          left: 11.30421px;
+        }
+        .lds-default div:nth-child(9) {
+          animation-delay: -0.8s;
+          top: 62.29579px;
+          left: 22.08px;
+        }
+        .lds-default div:nth-child(10) {
+          animation-delay: -0.9s;
+          top: 66.24px;
+          left: 36.8px;
+        }
+        .lds-default div:nth-child(11) {
+          animation-delay: -1s;
+          top: 62.29579px;
+          left: 51.52px;
+        }
+        .lds-default div:nth-child(12) {
+          animation-delay: -1.1s;
+          top: 51.52px;
+          left: 62.29579px;
+        }
+        @keyframes lds-default {
+          0%, 20%, 80%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.5);
+          }
+        }
     }
 
     &-cwrapper {
