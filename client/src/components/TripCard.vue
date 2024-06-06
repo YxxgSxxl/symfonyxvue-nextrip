@@ -9,7 +9,7 @@ function imgSource(source): string {
 </script>
 
 <template>
-    <!-- {{ weatherData.data }} -->
+    <!-- {{ weatherData }} -->
 
     <div class="tripcard">
         <p>TODAY</p>
@@ -44,10 +44,14 @@ function imgSource(source): string {
 </template>
 
 <style lang="scss" scoped>
-.tripcard {
-    background-color: rgba(62, 150, 191, .2);
+.tripcard {    
+    background: rgba(62, 150, 191, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.8px);
+    -webkit-backdrop-filter: blur(5.8px);
+    border: 1px solid rgba(62, 150, 191, 0.66);
     padding: 1.2rem 1rem 1.5rem 1rem;
-    border-radius: 10px;
     align-items: center;
     position: relative;
 

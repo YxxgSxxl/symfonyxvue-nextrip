@@ -45,16 +45,22 @@ async function submitForm(query: String) {
 <template>
     <div class="trip">
         <h1>{{ title }}</h1>
-
+        
         <TripForm v-if="search" @search="submitForm" />
-
-        <div class="trip-cwrapper">
-            <TripCard v-if="searched" v-for="(data, i) in data_weather.data.cities" :key="i" :weatherData="data" />
-        </div>
-
+        
         <div class="weather-error">
             {{ error }}
         </div>
+            
+        <div class="trip-other" v-if="searched">
+            {{ data_weather?.data[0].winner }}
+            {{ data_weather?.data[1] }}
+        </div>
+
+        <div class="trip-cwrapper">
+            <TripCard v-if="searched" v-for="(data, i) in data_weather.data[0].cities" :key="i" :weatherData="data" />
+        </div>
+
     </div>
 </template>
 

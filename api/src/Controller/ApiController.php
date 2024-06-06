@@ -43,11 +43,14 @@ class ApiController extends AbstractController
 
         // Algorythm
         $compareData = []; // This array contains the average of their weather values and the score
-        $compareData['city1'] = ['temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
-        $compareData['city2'] = ['temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
+        $compareData['city1'] = ['name' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
+        $compareData['city2'] = ['name' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
 
         // if the city name of the first queries are the same
         if ($responseArray['cities'][0]->name == $responseArray['citiesAll'][0]->city->name) {
+            $compareData['city1']['name'] = $responseArray['citiesAll'][0]->city->name; // add names on the compareData array
+            $compareData['city2']['name'] = $responseArray['citiesAll'][1]->city->name; // add names on the compareData array
+
             $listSize = count($responseArray['citiesAll'][0]->list); // size of the array
 
             // For loop that goes all the way up the array
@@ -81,12 +84,12 @@ class ApiController extends AbstractController
 
                 // if cit1tempmoy value has the lowest difference
                 if ($cit1tempmoy < $cit2tempmoy) {
-                    $compareData['city1']['score'] = 20;
+                    $compareData['city1']['score'] = $compareData['city1']['score'] + 20;
                 }
 
                 // if cit2moy value has the lowest difference
                 if ($cit2tempmoy < $cit1tempmoy) {
-                    $compareData['city2']['score'] = 20;
+                    $compareData['city2']['score'] = $compareData['city2']['score'] + 20;
                 }
 
                 // COMPARING THE HUMIDITY
@@ -164,11 +167,12 @@ class ApiController extends AbstractController
                 }
 
                 $arr = get_defined_vars();
+                $arr;
+                // dd($compareData, $arr);
 
-                dd($compareData, $arr, $cit1clmoy, $cit2clmoy);
-
-                // Clourds rate check
-                // First city cloud rate total
+                if ($compareData['city1']['score'] > $compareData['city2']['score']) {
+                    $responseArray['winner'] = $compareData['city1']['name']; // Winner!
+                }
             }
             // dd('');
             // dd($listSize);
@@ -176,8 +180,7 @@ class ApiController extends AbstractController
             null;
         }
 
-        $responseArray['winner'] = ""; // Winners
 
-        return $this->json($responseArray);
+        return $this->json([$responseArray, $compareData]);
     }
 }
