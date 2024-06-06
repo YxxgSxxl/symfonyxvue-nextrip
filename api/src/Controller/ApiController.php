@@ -89,10 +89,11 @@ class ApiController extends AbstractController
 
             // COMPARING THE TEMPERATURE
             $cit1tempmoy = $totaltemp1 / $listSize;
-            $cit1tempmoy = $cit1tempmoy - 27;
+            // $cit1tempmoy = $cit1tempmoy - 27; // Offset of the average
+            $compare->calculateOffset($cit1tempmoy, $totaltemp1, 27);
 
             $cit2tempmoy = $totaltemp2 / $listSize;
-            $cit2tempmoy = $cit2tempmoy - 27;
+            $compare->calculateOffset($cit2tempmoy, $totaltemp1, 27);
 
             // if cit1tempmoy value is below 0, make it positive
             if ($cit1tempmoy < 0) {
@@ -121,10 +122,10 @@ class ApiController extends AbstractController
 
             // COMPARING THE HUMIDITY
             $cit1hummoy = $totalhum1 / $listSize;
-            $cit1hummoy = $cit1hummoy - 60;
+            $compare->calculateOffset($cit1hummoy, $totaltemp1, 60);
 
             $cit2hummoy = $totalhum2 / $listSize;
-            $cit2hummoy = $cit2hummoy - 60;
+            $compare->calculateOffset($cit2hummoy, $totaltemp1, 60);
 
             // if cit1hummoy value is below 0, make it positive
             if ($cit1hummoy < 0) {
@@ -153,10 +154,10 @@ class ApiController extends AbstractController
 
             // COMPARING THE CLOUDS RATE
             $cit1clmoy = $total1cl / $listSize;
-            $cit1clmoy = $cit1clmoy - 15;
+            $compare->calculateOffset($cit1clmoy, $totaltemp1, 15);
 
             $cit2clmoy = $total2cl / $listSize;
-            $cit2clmoy = $cit2clmoy - 15;
+            $compare->calculateOffset($cit2clmoy, $totaltemp1, 15);
 
             // if cit1clmoy value is below 0, make it positive
             if ($cit1clmoy < 0) {
