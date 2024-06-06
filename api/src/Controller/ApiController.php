@@ -4,16 +4,18 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+
+// include_once "../services/compare.service.php"; // Add my class of comparing functions
 
 class ApiController extends AbstractController
 {
     #[Route('/api/{city1}/{city2}', name: 'app_api')]
     public function compare(string $city1, string $city2, ParameterBagInterface $parameterBag): JsonResponse
     {
+        // $compareFunctions = new \Compare;
+
         $responseArray = [];
         // FETCH OpenWeather map API here
         $url_base = "https://api.openweathermap.org/data/2.5/";
@@ -41,7 +43,7 @@ class ApiController extends AbstractController
 
         // dd();
 
-        // Algorythm
+        // Algorythm to compare
         $compareData = []; // This array contains the average of their weather values and the score
         $compareData['city1'] = ['name' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
         $compareData['city2'] = ['name' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
@@ -53,11 +55,12 @@ class ApiController extends AbstractController
 
             $listSize = count($responseArray['citiesAll'][0]->list); // size of the array
 
-            // For loop that goes all the way up the array
+            // For loop that takes every total of the two cities
             for ($i = 0; $i < $listSize; $i++) {
                 // First city temp total
                 $totaltemp1 = 0;
                 $totaltemp1 += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
+                // $compareFunctions->CalculateTotal($totaltemp1, $responseArray['citiesAll'][0]->list[$i]->main->temp, $listSize);
                 // Second city temp total
                 $totaltemp2 = 0;
                 $totaltemp2 += $responseArray['citiesAll'][1]->list[$i]->main->temp * $listSize;

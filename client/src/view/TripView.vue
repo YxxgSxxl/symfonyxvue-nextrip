@@ -53,7 +53,7 @@ async function submitForm(query: String) {
         </div>
             
         <div class="trip-other" v-if="searched">
-            {{ data_weather?.data[0].winner }}
+            {{ data_weather?.data[0]?.winner }}
             {{ data_weather?.data[1] }}
         </div>
 
