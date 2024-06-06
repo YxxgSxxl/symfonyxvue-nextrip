@@ -7,10 +7,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
+use App\Service\CompareService; // Custom service that help comparing datas
+
 class ApiController extends AbstractController
 {
     #[Route('/api/{city1}/{city2}', name: 'app_api')]
-    public function compare(string $city1, string $city2, ParameterBagInterface $parameterBag): JsonResponse
+    public function compare(string $city1, string $city2, ParameterBagInterface $parameterBag, CompareService $compare): JsonResponse
     {
         $responseArray = [];
         // FETCH OpenWeather map API here
@@ -63,6 +65,26 @@ class ApiController extends AbstractController
                 // First city humidity total
                 $total2cl = 0;
                 $total2cl += $responseArray['citiesAll'][1]->list[$i]->main->humidity * $listSize;
+
+                // // First city temp total
+                // $totaltemp1 = 0;
+                // // $totaltemp1 += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
+                // $compare->calculateTotal($totaltemp1, $responseArray['citiesAll'][0]->list[$i]->main->temp, $listSize);
+                // // Second city temp total
+                // $totaltemp2 = 0;
+                // $compare->calculateTotal($totaltemp2, $responseArray['citiesAll'][1]->list[$i]->main->temp, $listSize);
+                // // First city humidity total
+                // $totalhum1 = 0;
+                // $compare->calculateTotal($totalhum1, $responseArray['citiesAll'][0]->list[$i]->main->humidity, $listSize);
+                // // First city humidity total
+                // $totalhum2 = 0;
+                // $compare->calculateTotal($totalhum2, $responseArray['citiesAll'][1]->list[$i]->main->humidity, $listSize);
+                // // First city clouds rate total
+                // $total1cl = 0;
+                // $compare->calculateTotal($total1cl, $responseArray['citiesAll'][0]->list[$i]->clouds->all, $listSize);
+                // // First city clouds rate total
+                // $total2cl = 0;
+                // $compare->calculateTotal($total2cl, $responseArray['citiesAll'][1]->list[$i]->clouds->all, $listSize);
             }
 
             // COMPARING THE TEMPERATURE
@@ -174,7 +196,6 @@ class ApiController extends AbstractController
         } else {
             null;
         }
-
 
         return $this->json([$responseArray, $compareData]);
     }
