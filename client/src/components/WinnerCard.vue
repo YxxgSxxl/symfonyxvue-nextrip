@@ -9,10 +9,10 @@ const props = defineProps({
 
     <div class="winnerCard">
         <div class="winnercard-name">
-            <img src="../../public/crown.svg" alt="Winner Crown" width="50">
+            <img src="/crown.svg" alt="Winner Crown" width="50">
             <h2>{{ props.winnerData?.city1.name }}</h2>
         </div>
-        azfza
+        test here test here test here
     </div>
 </template>
 
