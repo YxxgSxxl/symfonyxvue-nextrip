@@ -43,8 +43,8 @@ class ApiController extends AbstractController
 
         // Algorythm
         $compareData = []; // This array contains the average of their weather values and the score
-        $compareData['city1'] = ['temp' => null, 'humidity' => null, 'cloud' => null, 'score' => 0];
-        $compareData['city2'] = ['temp' => null, 'humidity' => null, 'cloud' => null, 'score' => 0];
+        $compareData['city1'] = ['temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
+        $compareData['city2'] = ['temp' => null, 'humidity' => null, 'clouds' => null, 'score' => 0];
 
         // if the city name of the first queries are the same
         if ($responseArray['cities'][0]->name == $responseArray['citiesAll'][0]->city->name) {
@@ -52,48 +52,123 @@ class ApiController extends AbstractController
 
             // For loop that goes all the way up the array
             for ($i = 0; $i < $listSize; $i++) {
-                // First city total
+                // COMPARING THE TEMPERATURE
+                // First city temp total
                 $total = 0;
                 $total += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
-                $cit1moy = $total / $listSize;
-                $cit1moy = $cit1moy - 27;
+                $cit1tempmoy = $total / $listSize;
+                $cit1tempmoy = $cit1tempmoy - 27;
 
-                // Second city total
+                // Second city temp total
                 $total = 0;
                 $total += $responseArray['citiesAll'][1]->list[$i]->main->temp * $listSize;
-                $cit2moy = $total / $listSize;
-                $cit2moy = $cit2moy - 27;
+                $cit2tempmoy = $total / $listSize;
+                $cit2tempmoy = $cit2tempmoy - 27;
 
-                // if cit1moy value is below 0, make it positive
-                if ($cit1moy < 0) {
-                    $cit1moy = $cit1moy * -1;
+                // if cit1tempmoy value is below 0, make it positive
+                if ($cit1tempmoy < 0) {
+                    $cit1tempmoy = $cit1tempmoy * -1;
                 }
 
-                // if cit2moy value is below 0, make it positive
-                if ($cit2moy < 0) {
-                    $cit2moy = $cit2moy * -1;
+                // if cit2tempmoy value is below 0, make it positive
+                if ($cit2tempmoy < 0) {
+                    $cit2tempmoy = $cit2tempmoy * -1;
                 }
 
                 // inject average values of temp
-                $compareData['city1']['temp'] = $cit1moy;
-                $compareData['city2']['temp'] = $cit2moy;
+                $compareData['city1']['temp'] = $cit1tempmoy;
+                $compareData['city2']['temp'] = $cit2tempmoy;
 
-                // if cit1moy value has the lowest difference
-                if ($cit1moy < $cit2moy) {
+                // if cit1tempmoy value has the lowest difference
+                if ($cit1tempmoy < $cit2tempmoy) {
                     $compareData['city1']['score'] = 20;
                 }
 
                 // if cit2moy value has the lowest difference
-                if ($cit2moy < $cit1moy) {
+                if ($cit2tempmoy < $cit1tempmoy) {
                     $compareData['city2']['score'] = 20;
                 }
 
-                dd($compareData);
+                // COMPARING THE HUMIDITY
+                // First city humidity total
+                $total = 0;
+                $total += $responseArray['citiesAll'][0]->list[$i]->main->humidity * $listSize;
+                $cit1hummoy = $total / $listSize;
+                $cit1hummoy = $cit1hummoy - 60;
 
+                // First city humidity total
+                $total = 0;
+                $total += $responseArray['citiesAll'][1]->list[$i]->main->humidity * $listSize;
+                $cit2hummoy = $total / $listSize;
+                $cit2hummoy = $cit2hummoy - 60;
 
-                // Humidity check
+                // if cit1hummoy value is below 0, make it positive
+                if ($cit1hummoy < 0) {
+                    $cit1hummoy = $cit1hummoy * -1;
+                }
+
+                // if cit2hummoy value is below 0, make it positive
+                if ($cit2hummoy < 0) {
+                    $cit2hummoy = $cit2hummoy * -1;
+                }
+
+                // inject average values of hum
+                $compareData['city1']['humidity'] = $cit1hummoy;
+                $compareData['city2']['humidity'] = $cit2hummoy;
+
+                // if cit1hummoy value has the lowest difference
+                if ($cit1hummoy < $cit2hummoy) {
+                    $compareData['city1']['score'] = $compareData['city1']['score'] + 15;
+                }
+
+                // if cit2moy value has the lowest difference
+                if ($cit2hummoy < $cit1hummoy) {
+                    $compareData['city2']['score'] = $compareData['city2']['score'] + 15;
+                }
+
+                // COMPARING THE CLOUDS RATE
+                // First city clouds rate total
+                $total = 0;
+                $total += $responseArray['citiesAll'][0]->list[$i]->clouds->all * $listSize;
+                $cit1clmoy = $total / $listSize;
+                $cit1clmoy = $cit1clmoy - 60;
+
+                // First city humidity total
+                $total = 0;
+                $total += $responseArray['citiesAll'][1]->list[$i]->main->humidity * $listSize;
+                $cit2clmoy = $total / $listSize;
+                $cit2clmoy = $cit2clmoy - 60;
+
+                // if cit1clmoy value is below 0, make it positive
+                if ($cit1clmoy < 0) {
+                    $cit1clmoy = $cit1clmoy * -1;
+                }
+
+                // if cit2clmoy value is below 0, make it positive
+                if ($cit2clmoy < 0) {
+                    $cit2clmoy = $cit2clmoy * -1;
+                }
+
+                // inject average values of hum
+                $compareData['city1']['clouds'] = $cit1clmoy;
+                $compareData['city2']['clouds'] = $cit2clmoy;
+
+                // if cit1clmoy value has the lowest difference
+                if ($cit1clmoy < $cit2clmoy) {
+                    $compareData['city1']['score'] = $compareData['city1']['score'] + 10;
+                }
+
+                // if cit2moy value has the lowest difference
+                if ($cit2clmoy < $cit1clmoy) {
+                    $compareData['city2']['score'] = $compareData['city2']['score'] + 10;
+                }
+
+                $arr = get_defined_vars();
+
+                dd($compareData, $arr, $cit1clmoy, $cit2clmoy);
 
                 // Clourds rate check
+                // First city cloud rate total
             }
             // dd('');
             // dd($listSize);
