@@ -33,9 +33,7 @@ class ApiController extends AbstractController
         $query3 = file_get_contents($url_base . "forecast?lat=" . $cities[0]->coord->lat . "&lon=" . $cities[0]->coord->lon . "&units=metric&appid=" . $api_key, true);
         $query4 = file_get_contents($url_base . "forecast?lat=" . $cities[1]->coord->lat . "&lon=" . $cities[1]->coord->lon . "&units=metric&appid=" . $api_key, true);
 
-        $citiesAll = [json_decode($query3), json_decode($query4)];
-
-        // dd($cities, $cities[0]->base, $cities[1]->main->temp, $citiesAll[0]->list);
+        $citiesAll = [json_decode($query3), json_decode($query4)]; // Decode JSON queries
 
         $responseArray['cities'] = $cities; // Cities
         $responseArray['citiesAll'] = $citiesAll; // Cities full informations (5 days long)
@@ -44,7 +42,7 @@ class ApiController extends AbstractController
         // dd();
 
         // Algorythm
-        $compareData = [];
+        $compareData = []; // This array contains the average of their weather values and the score
         $compareData['city1'] = ['temp' => null, 'humidity' => null, 'cloud' => null, 'score' => 0];
         $compareData['city2'] = ['temp' => null, 'humidity' => null, 'cloud' => null, 'score' => 0];
 
@@ -54,30 +52,44 @@ class ApiController extends AbstractController
 
             // For loop that goes all the way up the array
             for ($i = 0; $i < $listSize; $i++) {
-                // Temperature check
-                // if ($responseArray['citiesAll'][0]->list[$i]->main->temp == $responseArray['citiesAll'][1]->list[$i]->main->temp) {
-                //     dd('SAMEEEE');
-                // } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp > 27) {
-                //     print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: red">chaud</span> que 27°C de ' . $responseArray['citiesAll'][0]->list[$i]->main->temp - 27 . "°C.<br>");
-                //     // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
-                // } elseif ($responseArray['citiesAll'][0]->list[$i]->main->temp < 27) {
-                //     print_r("Array[" . $i . "]--> " . $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C" . ' est plus <span style="color: lightblue">froid</span> que 27°C de ' . 27 - $responseArray['citiesAll'][0]->list[$i]->main->temp . "°C.<br>");
-                //     // print_r(array_diff($responseArray['citiesAll'][0]->list[$i]->main->temp, 27) . " " . $i . "<br>");
-                // } else {
-                //     // dd('DIFFERENT');
-                //     // dd($responseArray['citiesAll'][0]->list[$i]->main->temp);
-                // }
-
                 // First city total
                 $total = 0;
                 $total += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
                 $cit1moy = $total / $listSize;
+                $cit1moy = $cit1moy - 27;
 
                 // Second city total
                 $total = 0;
                 $total += $responseArray['citiesAll'][1]->list[$i]->main->temp * $listSize;
                 $cit2moy = $total / $listSize;
-                dd($cit1moy, $cit2moy);
+                $cit2moy = $cit2moy - 27;
+
+                // if cit1moy value is below 0, make it positive
+                if ($cit1moy < 0) {
+                    $cit1moy = $cit1moy * -1;
+                }
+
+                // if cit2moy value is below 0, make it positive
+                if ($cit2moy < 0) {
+                    $cit2moy = $cit2moy * -1;
+                }
+
+                // inject average values of temp
+                $compareData['city1']['temp'] = $cit1moy;
+                $compareData['city2']['temp'] = $cit2moy;
+
+                // if cit1moy value has the lowest difference
+                if ($cit1moy < $cit2moy) {
+                    $compareData['city1']['score'] = 20;
+                }
+
+                // if cit2moy value has the lowest difference
+                if ($cit2moy < $cit1moy) {
+                    $compareData['city2']['score'] = 20;
+                }
+
+                dd($compareData);
+
 
                 // Humidity check
 
