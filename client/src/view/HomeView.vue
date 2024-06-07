@@ -1,10 +1,44 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import BlueBtn from '../components/BlueButton.vue'
+
+let welcomeMsg: any = ref("")
+let randNum: number = Math.floor(Math.random() * 6)
+
+// Random h1 value
+switch (randNum) {
+    case 0:
+        welcomeMsg = "Welcome to"
+        break
+    
+    case 1:
+        welcomeMsg = "Here is "
+        break
+
+    case 2:
+        welcomeMsg = "Chose "
+        break
+
+    case 3:
+        welcomeMsg = "Let's use "
+        break
+
+    case 4:
+        welcomeMsg = "Come on, "
+        break
+
+    case 5:
+        welcomeMsg = "New trip ? "
+        break
+
+    default:
+        break
+}
 </script>
 
 <template>
     <div class="home">
-        <h1>Welcome to Nex<span class="blue-text">Trip</span>!</h1>
+        <h1>{{ welcomeMsg }} Nex<span class="blue-text">Trip</span>!</h1>
 
         <div class="home-line">
             <p class="home--p1">Do you want to travel next days?</p>

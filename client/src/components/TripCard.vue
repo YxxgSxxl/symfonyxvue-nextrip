@@ -54,6 +54,9 @@ function imgSource(source): string {
     padding: 1.2rem 1rem 1.5rem 1rem;
     align-items: center;
     position: relative;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
 
     & p {
         text-align: center;
@@ -89,6 +92,20 @@ function imgSource(source): string {
         display: flex;
         flex-direction: column;
         gap: 0.6rem;
+    }
+}
+
+/* Tablets Responsive */
+@media (min-width: 768px) {
+    .tripcard {
+            width: 50%;
+    }
+}
+
+/* Large desktop Responsive */
+@media (min-width: 1200px) {
+    .tripcard {
+            width: 25%;
     }
 }
 </style>
