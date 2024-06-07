@@ -6,7 +6,7 @@ import TripForm from '../components/TripForm.vue' // Trip Form component
 import TripCard from '../components/TripCard.vue' // Trip Card component
 import WinnerCard from '../components/WinnerCard.vue' // Win Card component
 
-let title = ref("Compare two cities") // H1 tag value
+let title = ref("Research two cities") // H1 tag value
 let isLoading: any = ref(false) // Loading bool
 let search: any = ref(true) // Search bool
 let searched: any = ref(false) // Search done bool
@@ -77,7 +77,6 @@ async function submitForm(query: String) {
         <div class="trip-cwrapper" v-if="searched">
             <TripCard v-for="(data, i) in data_weather.data[0].cities" :key="i" :weatherData="data" />
         </div>
-
     </div>
 </template>
 

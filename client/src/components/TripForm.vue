@@ -22,8 +22,9 @@ function submitForm() {
             <input type="text" name="" id="" v-model.trim="city1" placeholder="First city">
             <p>And</p>
             <input type="text" name="" id="" v-model.trim="city2" placeholder="Second city">
-            <input type="submit" value="Show Results" @click="submitForm()" @keydown.enter="submitForm()">
+            <input type="submit" value="Compare" @click="submitForm()" @keydown.enter="submitForm()">
             <!-- {{ result }} -->
+            <small>You need more informations ?<br><router-link to="/about">click here</router-link></small>
         </div>
     </form>
 </template>
@@ -37,10 +38,9 @@ function submitForm() {
         gap: 1rem;
         width: 80%;
         padding: 2rem 1.5rem 2rem 1.5rem;
+        margin: 0 auto 4rem auto;
         border-radius: 15px;
         align-items: center;
-        margin-left: auto;
-        margin-right: auto;
 
         input[type=text] {
 	        appearance: none;
