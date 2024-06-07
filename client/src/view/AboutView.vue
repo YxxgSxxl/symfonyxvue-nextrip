@@ -3,7 +3,7 @@
 
 <template>
     <div class="about">
-        <h1>About <span class="blue-text">us</span></h1>
+        <h1>About Nex<span class="blue-text">Trip</span></h1>
         <div class="about-texts">
             <p>On NexTrip, you can compare between multiple cities wich one is the best one to go.</p>
             <p>We are making the choice for you! By checking wich city you chosed has the best weather (on 5 consecutive days)</p>
