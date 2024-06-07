@@ -34,7 +34,7 @@ const props = defineProps({
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M5 12l7 7 7-7"/></svg>
                 </div><br>
 
-                <h3 style="color: red;">{{ weatherData[0]?.name }}</h3>
+                <h3 style="color: red;">{{ winnerData?.city2.name }}</h3>
                 <div class="winnercard-temp">
                     <span class="winnercard-icons">🌡</span> {{ winnerData?.city2.temp }}°C
                 </div>
