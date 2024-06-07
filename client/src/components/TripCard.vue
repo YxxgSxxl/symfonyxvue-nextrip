@@ -61,6 +61,7 @@ function imgSource(source: string): string {
         font-weight: 600;
         color: rgba(0, 0, 0, .4);
         margin-bottom: 1rem;
+        font-size: larger;
     }
 
     &-icon {

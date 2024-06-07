@@ -7,7 +7,7 @@
         <div class="about-texts">
             <p>On NexTrip, you can compare between multiple cities wich one is the best one to go.</p>
             <p>We are making the choice for you! By checking wich city you chosed has the best weather (on 5 consecutive days)</p>
-            <p>We take our weather information with <a href="https://openweathermap.org/api" target="_blank">OpenWeatherMap API</a></p>
+            <p>We take our informations about weather with <a href="https://openweathermap.org/api" target="_blank">OpenWeatherMap API</a></p>
         </div>
     </div>
 </template>
