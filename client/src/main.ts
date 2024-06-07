@@ -23,7 +23,7 @@ const router = createRouter({
     linkExactActiveClass: "exact-active",
 })
 
-export default router // Export router to use it in external cases (like in TripView.vue for error handling)
+export default router // Export router to use it in external cases if needed (outsite of this file)
 
 createApp(App)
   .use(router)

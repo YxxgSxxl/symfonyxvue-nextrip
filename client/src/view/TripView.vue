@@ -5,7 +5,6 @@ import ConfettiExplosion from "vue-confetti-explosion" // Vue Conffeti Animation
 import TripForm from '../components/TripForm.vue' // Trip Form component
 import WinnerCard from '../components/WinnerCard.vue' // Win Card component
 import TripCard from '../components/TripCard.vue' // Trip Card component
-import router from '../main' // Vue router to push another route when needed
 
 let title = ref("Research two cities") // H1 tag value
 let isLoading: any = ref(false) // Loading bool
@@ -30,14 +29,13 @@ async function submitForm(query: any) {
         searched.value = true
 
       if (query.value[0].value.toLowerCase() == query.value[1].value.toLowerCase()) {
-        alert("Please, don't insert the same city name"); // notify the error to the user
-        router.push('/'); // change router destination to stop the activity
+        isError.value = true
+        isLoading.value = false
+        searched.value = false
+        error.value = "Please, don't insert the same city name twice"
       }
 
         data_weather.value = json
-        // json = data_weather.value
-        // console.log(json.data[0]);
-        // console.log(data_weather.value.data[0]);
         title.value = "Results"
         return data_weather
     })
