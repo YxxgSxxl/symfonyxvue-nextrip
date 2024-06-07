@@ -69,10 +69,10 @@ async function submitForm(query: any) {
             <router-link to="/">Homepage</router-link>
         </div>
             
-        <div class="trip-debug" v-if="searched">
-            <!-- {{ data_weather?.data[0].winner }}
-            {{ data_weather?.data[1] }} -->
-        </div>
+        <!-- <div class="trip-debug" v-if="searched">
+            {{ data_weather?.data[0].winner }}
+            {{ data_weather?.data[1] }}
+        </div> -->
 
         <div class="trip-winwrapper" v-if="searched">
             <ConfettiExplosion class="trip-conffeti" :particleCount="100" :particleSize="7" :duration="3000" />

@@ -11,7 +11,7 @@ const props = defineProps({
     <div class="winnercard">
         <div class="winnercard-name">
             <img src="/crown.svg" alt="Winner Crown" width="50">
-            <h2>✈️ {{ props.winnerData?.city1.name }}, {{ weatherData[0]?.sys.country }}</h2>
+            <h2>✈️ {{ props.winnerData?.city1.name }}</h2>
         </div>
         <p>Is the best city to have a trip for next week!</p><br><br>
         <div class="winnercard-average">
@@ -19,7 +19,7 @@ const props = defineProps({
             <div class="winnercard-infos">
                 <h3 style="color: green;">{{ winnerData?.city1.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp }}°C // Attention à fix, toutes ces valeurs ne sont pas la moyenne du temps sur 5j mais l'écart par rapport aux valeurs définies qui donnent les points tout ça en moyenne.
+                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp }}°C // Attention à fix, toutes ces valeurs ne sont pas la moyenne du temps sur 5j mais l'écart par rapport aux valeurs définies qui donnent les points tout ça en moyenne
                 </div>
             
                 <div class="winnercard-humidity">
