@@ -66,5 +66,23 @@ function submitForm() {
             cursor: pointer;
         }
     }
+
+    /* Tablets Responsive */
+    @media (min-width: 768px) {
+        .tripform {
+            &-container {
+                width: 50%;
+            }
+        }
+    }
+
+    /* Large desktop Responsive */
+    @media (min-width: 1200px) {
+        .tripform {
+            &-container {
+                width: 20%;
+            }
+        }
+    }
 }
 </style>
