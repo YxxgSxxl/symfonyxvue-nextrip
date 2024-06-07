@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import BlueBtn from '../components/BlueButton.vue'
 
 let welcomeMsg: any = ref("")
-let randNum: number = Math.floor(Math.random() * 6)
+let randNum: number = Math.floor(Math.random() * 7)
 
 // Random h1 value
 switch (randNum) {
@@ -29,6 +29,10 @@ switch (randNum) {
 
     case 5:
         welcomeMsg = "New trip ? "
+        break
+
+    case 6:
+        welcomeMsg = "Our solution, "
         break
 
     default:

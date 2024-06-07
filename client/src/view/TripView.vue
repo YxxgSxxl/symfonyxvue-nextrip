@@ -67,7 +67,7 @@ async function submitForm(query: String) {
 
         <div class="trip-winwrapper" v-if="searched">
             <ConfettiExplosion class="trip-conffeti" :particleCount="100" :particleSize="7" :duration="3000" />
-            <WinnerCard :winnerData="data_weather.data[1]" />
+            <WinnerCard :winnerData="data_weather.data[1]" :weatherData="data_weather.data[0].cities" />
         </div>
 
         <div class="trip-cwrapper" v-if="searched">

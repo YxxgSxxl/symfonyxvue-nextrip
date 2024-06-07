@@ -14,7 +14,7 @@ function imgSource(source): string {
     <div class="tripcard">
         <p>TODAY</p>
         <div class="tripcard-icon">
-            <img :src="imgSource(weatherData?.weather[0].icon)" alt=""> 
+            <img :src="imgSource(props.weatherData?.weather[0].icon)" alt=""> 
         </div>
 
         <div class="tripcard-name">

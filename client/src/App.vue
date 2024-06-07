@@ -3,9 +3,11 @@ import HeaderComp from './components/HeaderComp.vue'
 </script>
 
 <template>
+  <div class="app-bg">
   <HeaderComp />
 
-  <RouterView />
+    <RouterView />
+  </div>
 </template>
 
 <style>
@@ -15,8 +17,20 @@ import HeaderComp from './components/HeaderComp.vue'
   box-sizing: border-box;
 }
 
+::selection {
+  background: rgba(130, 192, 220, 0.3);
+  color: rgb(0, 170, 249) 
+}
+
 body {
   font-family: Roboto, Arial, Helvetica, sans-serif;
+  
+  background: #ffffff;
+  background: -webkit-linear-gradient(42deg, #f7f7f7 0%, #ffffff 100%);
+  background: linear-gradient(42deg, #f9f9ff 0%, #ffffff 100%);
+  
+  height: 100vh;
+  z-index: -2;
 }
 
 .black-text {
