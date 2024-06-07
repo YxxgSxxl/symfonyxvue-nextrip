@@ -3,14 +3,12 @@ const props = defineProps({
   weatherData: Object,
 });
 
-function imgSource(source): string {
+function imgSource(source: string): string {
     return `https://openweathermap.org/img/w/${source}.png`
 }
 </script>
 
 <template>
-    <!-- {{ weatherData }} -->
-
     <div class="tripcard">
         <p>TODAY</p>
         <div class="tripcard-icon">
@@ -23,7 +21,7 @@ function imgSource(source): string {
 
         <div class="tripcard-infos">
             <div class="tripcard-temp">
-                <span class="tripcard-icons">🌡</span> {{ weatherData?.main.temp }}°C
+                <span class="tripcard-icons">🌡</span> {{ weatherData?.main.temp.toFixed(2) }}°C
             </div>
     
             <div class="tripcard-humidity">
@@ -45,12 +43,12 @@ function imgSource(source): string {
 
 <style lang="scss" scoped>
 .tripcard {    
-    background: rgba(62, 150, 191, 0.25);
+    background: rgb(255, 255, 255);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 30px rgba(52, 52, 52, 0.1);
     backdrop-filter: blur(5.8px);
     -webkit-backdrop-filter: blur(5.8px);
-    border: 1px solid rgba(62, 150, 191, 0.66);
+    border: 1px solid rgba(207, 207, 207, 0.66);
     padding: 1.2rem 1rem 1.5rem 1rem;
     align-items: center;
     position: relative;

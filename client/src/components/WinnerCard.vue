@@ -19,7 +19,7 @@ const props = defineProps({
             <div class="winnercard-infos">
                 <h3 style="color: green;">{{ winnerData?.city1.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp }}°C
+                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp.toFixed(2) }}°C
                 </div>
             
                 <div class="winnercard-humidity">
@@ -36,7 +36,7 @@ const props = defineProps({
 
                 <h3 style="color: red;">{{ props.weatherData[1]?.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city2.temp }}°C
+                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city2.temp.toFixed(2) }}°C
                 </div>
             
                 <div class="winnercard-humidity">
