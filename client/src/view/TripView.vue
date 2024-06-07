@@ -15,7 +15,7 @@ let isError: any = ref(false);
 let data_weather: any = ref([]); // Weather data Array
 
 
-async function submitForm(query: String) {
+async function submitForm(query: any) {
     search.value = false
     isLoading.value = true
     

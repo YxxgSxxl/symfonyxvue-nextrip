@@ -9,34 +9,34 @@ let randNum: number = Math.floor(Math.random() * 7)
 switch (randNum) {
     case 0:
         welcomeMsg = "Welcome to"
-        break
+        break;
     
     case 1:
         welcomeMsg = "Here is "
-        break
+        break;
 
     case 2:
         welcomeMsg = "Chose "
-        break
+        break;
 
     case 3:
         welcomeMsg = "Let's use "
-        break
+        break;
 
     case 4:
         welcomeMsg = "Come on, "
-        break
+        break;
 
     case 5:
-        welcomeMsg = "New trip ? "
-        break
+        welcomeMsg = "New trip? "
+        break;
 
     case 6:
         welcomeMsg = "Our solution, "
-        break
+        break;
 
     default:
-        break
+        break;
 }
 </script>
 
