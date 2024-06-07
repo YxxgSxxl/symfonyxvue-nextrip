@@ -28,6 +28,7 @@ async function submitForm(query: any) {
         isLoading.value = false
         searched.value = true
 
+      // ERROR HANDLING --> If the cities entered are the same
       if (query.value[0].value.toLowerCase() == query.value[1].value.toLowerCase()) {
         isError.value = true
         isLoading.value = false
