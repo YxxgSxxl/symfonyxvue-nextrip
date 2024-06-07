@@ -92,7 +92,7 @@ class ApiController extends AbstractController
             // if cit2tempmoy value is below 0, make it positive
             $compare->ifValBelowZero($cit2tempmoy);
 
-            // inject average values of temp
+            // inject offset of average values of temp in array
             $compareData['city1']['temp'] = $cit1tempmoy;
             $compareData['city2']['temp'] = $cit2tempmoy;
 
@@ -120,7 +120,7 @@ class ApiController extends AbstractController
             // if cit2hummoy value is below 0, make it positive
             $compare->ifValBelowZero($cit2hummoy);
 
-            // inject average values of hum
+            // inject offset of average values of hum in array
             $compareData['city1']['humidity'] = $cit1hummoy;
             $compareData['city2']['humidity'] = $cit2hummoy;
 
@@ -148,7 +148,7 @@ class ApiController extends AbstractController
             // if cit2clmoy value is below 0, make it positive
             $compare->ifValBelowZero($cit2clmoy);
 
-            // inject average values of hum
+            // inject offset of average values of hum in array
             $compareData['city1']['clouds'] = $cit1clmoy;
             $compareData['city2']['clouds'] = $cit2clmoy;
 
@@ -185,13 +185,13 @@ class ApiController extends AbstractController
         //     $rep = "not good";
         // }
 
+        // Verify if the Winner city take the city1 position instead of staying city2 (this condition is to make the front match the back)
         if ($compareData['city1']['name'] == $responseArray['winner']) {
             null;
         } else {
-            $temp1 = $compareData['city1'];
-
+            $temp = $compareData['city1']; // save city1 informations in a temp var
             $compareData['city1'] = $compareData['city2'];
-            $compareData['city2'] = $temp1;
+            $compareData['city2'] = $temp;
         }
 
         // if ($compareData['city1']['name'] == $responseArray['winner']) {

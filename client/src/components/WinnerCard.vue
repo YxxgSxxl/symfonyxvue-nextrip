@@ -19,7 +19,7 @@ const props = defineProps({
             <div class="winnercard-infos">
                 <h3 style="color: green;">{{ winnerData?.city1.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp }}°C
+                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp }}°C // Attention à fix, toutes ces valeurs ne sont pas la moyenne du temps sur 5j mais l'écart par rapport aux valeurs définies qui donnent les points tout ça en moyenne.
                 </div>
             
                 <div class="winnercard-humidity">
