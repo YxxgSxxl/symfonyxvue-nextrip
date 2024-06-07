@@ -40,6 +40,10 @@ async function submitForm(query: String) {
         isError.value = true
         isLoading.value = false
         error.value = err
+
+        // More informations about the error (Debugging)
+        console.log(err.toJSON());
+        
     })
 }
 </script>

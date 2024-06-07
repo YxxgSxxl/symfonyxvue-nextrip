@@ -28,9 +28,9 @@ body {
   background: #ffffff;
   background: -webkit-linear-gradient(42deg, #f7f7f7 0%, #ffffff 100%);
   background: linear-gradient(42deg, #f9f9ff 0%, #ffffff 100%);
-  
-  height: 100vh;
+  min-height: 100vh;
   z-index: -2;
+  padding-bottom: 4rem;
 }
 
 .black-text {
