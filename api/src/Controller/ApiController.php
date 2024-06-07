@@ -73,35 +73,15 @@ class ApiController extends AbstractController
                 // First city humidity total
                 $total2cl = 0;
                 $total2cl += $responseArray['citiesAll'][1]->list[$i]->main->humidity * $listSize;
-
-                // // First city temp total
-                // $totaltemp1 = 0;
-                // // $totaltemp1 += $responseArray['citiesAll'][0]->list[$i]->main->temp * $listSize;
-                // $compare->calculateTotal($totaltemp1, $responseArray['citiesAll'][0]->list[$i]->main->temp, $listSize);
-                // // Second city temp total
-                // $totaltemp2 = 0;
-                // $compare->calculateTotal($totaltemp2, $responseArray['citiesAll'][1]->list[$i]->main->temp, $listSize);
-                // // First city humidity total
-                // $totalhum1 = 0;
-                // $compare->calculateTotal($totalhum1, $responseArray['citiesAll'][0]->list[$i]->main->humidity, $listSize);
-                // // First city humidity total
-                // $totalhum2 = 0;
-                // $compare->calculateTotal($totalhum2, $responseArray['citiesAll'][1]->list[$i]->main->humidity, $listSize);
-                // // First city clouds rate total
-                // $total1cl = 0;
-                // $compare->calculateTotal($total1cl, $responseArray['citiesAll'][0]->list[$i]->clouds->all, $listSize);
-                // // First city clouds rate total
-                // $total2cl = 0;
-                // $compare->calculateTotal($total2cl, $responseArray['citiesAll'][1]->list[$i]->clouds->all, $listSize);
             }
 
             // COMPARING THE TEMPERATURE
             $cit1tempmoy = $totaltemp1 / $listSize;
             // $cit1tempmoy = $cit1tempmoy - 27; // Offset of the average
-            $compare->calculateOffset($cit1tempmoy, $totaltemp1, 27);
+            $compare->calculateOffset($cit1tempmoy, 27);
 
             $cit2tempmoy = $totaltemp2 / $listSize;
-            $compare->calculateOffset($cit2tempmoy, $totaltemp1, 27);
+            $compare->calculateOffset($cit2tempmoy, 27);
 
             // if cit1tempmoy value is below 0, make it positive
             // if ($cit2tempmoy < 0) {
@@ -129,10 +109,10 @@ class ApiController extends AbstractController
 
             // COMPARING THE HUMIDITY
             $cit1hummoy = $totalhum1 / $listSize;
-            $compare->calculateOffset($cit1hummoy, $totaltemp1, 60);
+            $compare->calculateOffset($cit1hummoy, 60);
 
             $cit2hummoy = $totalhum2 / $listSize;
-            $compare->calculateOffset($cit2hummoy, $totaltemp1, 60);
+            $compare->calculateOffset($cit2hummoy, 60);
 
             // if cit1hummoy value is below 0, make it positive
             $compare->ifValBelowZero($cit1hummoy);
@@ -157,10 +137,10 @@ class ApiController extends AbstractController
 
             // COMPARING THE CLOUDS RATE
             $cit1clmoy = $total1cl / $listSize;
-            $compare->calculateOffset($cit1clmoy, $totaltemp1, 15);
+            $compare->calculateOffset($cit1clmoy, 15);
 
             $cit2clmoy = $total2cl / $listSize;
-            $compare->calculateOffset($cit2clmoy, $totaltemp1, 15);
+            $compare->calculateOffset($cit2clmoy, 15);
 
             // if cit1clmoy value is below 0, make it positive
             $compare->ifValBelowZero($cit1clmoy);
@@ -192,10 +172,35 @@ class ApiController extends AbstractController
 
             if ($compareData['city1']['score'] > $compareData['city2']['score']) {
                 $responseArray['winner'] = $compareData['city1']['name']; // Winner!
+            } elseif ($compareData['city2']['score'] > $compareData['city1']['score']) {
+                $responseArray['winner'] = $compareData['city2']['name']; // Winner!
             }
         } else {
             null;
         }
+
+        // if ($compareData['city1']['name'] == $responseArray['winner']) {
+        //     $rep = "good";
+        // } else {
+        //     $rep = "not good";
+        // }
+
+        if ($compareData['city1']['name'] == $responseArray['winner']) {
+            null;
+        } else {
+            $temp1 = $compareData['city1'];
+
+            $compareData['city1'] = $compareData['city2'];
+            $compareData['city2'] = $temp1;
+        }
+
+        // if ($compareData['city1']['name'] == $responseArray['winner']) {
+        //     $rep = "good";
+        // } else {
+        //     $rep = "not good";
+        // }
+
+        // dd($compareData, $responseArray, $rep);
 
         return $this->json([$responseArray, $compareData]);
     }

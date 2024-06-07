@@ -11,7 +11,7 @@ const props = defineProps({
     <div class="winnercard">
         <div class="winnercard-name">
             <img src="/crown.svg" alt="Winner Crown" width="50">
-            <h2>✈️ {{ props.winnerData?.city1.name }}, {{ props.weatherData[0]?.sys.country }}</h2>
+            <h2>✈️ {{ props.winnerData?.city1.name }}, {{ weatherData[0]?.sys.country }}</h2>
         </div>
         <p>Is the best city to have a trip for next week!</p><br><br>
         <div class="winnercard-average">
@@ -19,7 +19,7 @@ const props = defineProps({
             <div class="winnercard-infos">
                 <h3 style="color: green;">{{ winnerData?.city1.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp.toFixed(2) }}°C
+                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp }}°C
                 </div>
             
                 <div class="winnercard-humidity">
@@ -34,9 +34,9 @@ const props = defineProps({
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M5 12l7 7 7-7"/></svg>
                 </div><br>
 
-                <h3 style="color: red;">{{ props.weatherData[1]?.name }}</h3>
+                <h3 style="color: red;">{{ weatherData[0]?.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city2.temp.toFixed(2) }}°C
+                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city2.temp }}°C
                 </div>
             
                 <div class="winnercard-humidity">

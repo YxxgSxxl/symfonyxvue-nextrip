@@ -21,7 +21,7 @@ function imgSource(source: string): string {
 
         <div class="tripcard-infos">
             <div class="tripcard-temp">
-                <span class="tripcard-icons">🌡</span> {{ weatherData?.main.temp.toFixed(2) }}°C
+                <span class="tripcard-icons">🌡</span> {{ weatherData?.main.temp }}°C
             </div>
     
             <div class="tripcard-humidity">

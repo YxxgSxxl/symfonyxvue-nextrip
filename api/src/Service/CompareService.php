@@ -10,7 +10,7 @@ class CompareService
         return $totalValue;
     }
 
-    public function calculateOffset(int|float $averageValue, int|float $totalValue, int $amount)
+    public function calculateOffset(int|float $averageValue, int $amount)
     {
         $averageValue = $averageValue - $amount; // Offset of the average
         return $averageValue;
