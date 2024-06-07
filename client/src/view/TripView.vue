@@ -3,8 +3,9 @@ import { ref } from 'vue' // Refs
 import axios from 'axios' // Axios
 import ConfettiExplosion from "vue-confetti-explosion" // Vue Conffeti Animations lib
 import TripForm from '../components/TripForm.vue' // Trip Form component
-import TripCard from '../components/TripCard.vue' // Trip Card component
 import WinnerCard from '../components/WinnerCard.vue' // Win Card component
+// import TripMap from '../components/TripMap.vue' // Trip Map component
+import TripCard from '../components/TripCard.vue' // Trip Card component
 
 let title = ref("Research two cities") // H1 tag value
 let isLoading: any = ref(false) // Loading bool
@@ -73,6 +74,10 @@ async function submitForm(query: any) {
             <ConfettiExplosion class="trip-conffeti" :particleCount="100" :particleSize="7" :duration="3000" />
             <WinnerCard :winnerData="data_weather.data[1]" :weatherData="data_weather.data[0].cities" />
         </div>
+
+        <!-- <div class="trip-mapwrapper" v-if="searched">
+          <TripMap :weatherData="data_weather[0].cities" />
+        </div> -->
 
         <div class="trip-cwrapper" v-if="searched">
             <TripCard v-for="(data, i) in data_weather.data[0].cities" :key="i" :weatherData="data" />
