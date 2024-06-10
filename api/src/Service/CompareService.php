@@ -4,9 +4,9 @@ namespace App\Service;
 
 class CompareService
 {
-    public function calculateTotal(int|float $totalValue, int|float $responseArrayLoc, int $listSize)
+    public function calculateTotal(int|float $totalValue, int|float $responseArrayLoc)
     {
-        $totalValue += $responseArrayLoc * $listSize;
+        $totalValue += $responseArrayLoc;
         return $totalValue;
     }
 
