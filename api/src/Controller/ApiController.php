@@ -49,14 +49,18 @@ class ApiController extends AbstractController
         $getWeatherFull2 = file_get_contents($owm_base . "forecast?lat=" . $compareData[1]->coord->lat . "&lon=" . $compareData[1]->coord->lon . "&units=metric&appid=" . $api_key, true);
 
         $compareData = [json_decode($getWeather1), json_decode($getWeather2), json_decode($getWeatherFull1), json_decode($getWeatherFull2)]; // Final Array format
+        $listSize = count($compareData[2]->list);
 
         // Save data needed into responseData Array
         $responseArray['city1today'] = ['icon' => $compareData[0]->weather[0]->icon, 'name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'temp' => $compareData[0]->main->temp, 'humidity' => $compareData[0]->main->humidity, 'clouds' => $compareData[0]->clouds->all, 'wind' => $compareData[0]->wind->speed];
         $responseArray['city2today'] = ['icon' => $compareData[1]->weather[0]->icon, 'name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'temp' => $compareData[1]->main->temp, 'humidity' => $compareData[1]->main->humidity, 'clouds' => $compareData[1]->clouds->all, 'wind' => $compareData[1]->wind->speed];
 
         // Algorythm part
+        if ($compareData[0]->name == $compareData[2]->city->name && $compareData[1]->name == $compareData[3]->city->name) {
+            for ($i = 0; $i < $listSize; $i++) {
+                dd(get_defined_vars());
+            }
+        }
 
-
-        dd(get_defined_vars());
     }
 }
