@@ -29,6 +29,8 @@ class ApiController extends AbstractController
         // This array returns API call response in the good format
         $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
         $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
+        $responseArray['cityavg1'] = [];
+        $responseArray['cityavg2'] = [];
         $responseArray['citywinner'] = ['name' => null, 'country' => null];
         $compareData = array(); // This array is only used in the algorythm
 
@@ -52,9 +54,8 @@ class ApiController extends AbstractController
         $responseArray['city1today'] = ['icon' => $compareData[0]->weather[0]->icon, 'name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'temp' => $compareData[0]->main->temp, 'humidity' => $compareData[0]->main->humidity, 'clouds' => $compareData[0]->clouds->all, 'wind' => $compareData[0]->wind->speed];
         $responseArray['city2today'] = ['icon' => $compareData[1]->weather[0]->icon, 'name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'temp' => $compareData[1]->main->temp, 'humidity' => $compareData[1]->main->humidity, 'clouds' => $compareData[1]->clouds->all, 'wind' => $compareData[1]->wind->speed];
 
-
         // Algorythm part
-        
+
 
         dd(get_defined_vars());
     }
