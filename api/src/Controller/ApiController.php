@@ -31,7 +31,8 @@ class ApiController extends AbstractController
         $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
         $responseArray['city1avg'] = [];
         $responseArray['city2avg'] = [];
-        $responseArray['citywinner'] = ['name' => null, 'country' => null];
+        $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null];
+        $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null];
         $compareData = array(); // This array is only used in the algorythm
 
         // API's here
@@ -55,59 +56,87 @@ class ApiController extends AbstractController
         $responseArray['city2today'] = ['icon' => $compareData[1]->weather[0]->icon, 'name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'temp' => $compareData[1]->main->temp, 'humidity' => $compareData[1]->main->humidity, 'clouds' => $compareData[1]->clouds->all, 'wind' => $compareData[1]->wind->speed];
 
         // Algorythm part
-        if ($compareData[0]->name == $compareData[2]->city->name && $compareData[1]->name == $compareData[3]->city->name) {
-            $listSize = count($compareData[2]->list); // value size of the weather list
-
-            $temp1 = 0; // Total temp value of the first city
-            $temp2 = 0; // Total temp value of the second city
-            $hum1 = 0; // Total humidity value of the first city
-            $hum2 = 0; // Total humidity value of the second city
-            $clouds1 = 0; // Total clouds rate value of the first city
-            $clouds2 = 0; // Total clouds rate value of the second city
-
-            // Calculate all the totals values we need
-            for ($i = 0; $i < $listSize; $i++) {
-                $temp1 += $compareData[2]->list[$i]->main->temp;
-                $temp2 += $compareData[3]->list[$i]->main->temp;
-                $hum1 += $compareData[2]->list[$i]->main->humidity;
-                $hum2 += $compareData[3]->list[$i]->main->humidity;
-                $clouds1 += $compareData[2]->list[$i]->clouds->all;
-                $clouds2 += $compareData[3]->list[$i]->clouds->all;
-            }
-
-            $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2];
-
-
-            // Treatment for every values
-            foreach ($compareData['average'] as $key => $value) {
-                $value = $value / 40; // Calculate all the average
-
-                // if total values are below zero
-                if ($value < 0) {
-                    $value = $value * -1;
-                } else {
-                    null;
-                }
-
-                $compareData['average'][$key] = $value;
-            }
-
-            // Puting average values into the responseArray
-            $responseArray['city1avg'] = ['temp1' => $compareData['average']['temp1'], 'hum1' => $compareData['average']['hum1'], 'clouds1' => $compareData['average']['clouds1']];
-            $responseArray['city2avg'] = ['temp2' => $compareData['average']['temp2'], 'hum2' => $compareData['average']['hum2'], 'clouds2' => $compareData['average']['clouds2']];
-
-            // Calculate the offset between the recommanded values and the one that weather has
-            $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $treshTemp);
-            $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $treshTemp);
-            $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $treshHum);
-            $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $treshHum);
-            $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $treshClouds);
-            $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $treshClouds);
-            // THESE VALUES ARE NOW OFFSET VALUES!
-
-            dd(get_defined_vars());
-        } else {
-            null;
+        if ($compareData[0]->name != $compareData[2]->city->name || $compareData[1]->name != $compareData[3]->city->name) {
+            return null; // error
         }
+
+        $listSize = count($compareData[2]->list); // value size of the weather list
+        $compareData['city1full'] = $compareData[2];
+        $compareData['city2full'] = $compareData[3];
+
+        $temp1 = 0; // Total temp value of 1st city
+        $temp2 = 0; // Total temp value of 2nd city
+        $hum1 = 0; // Total humidity value of 1st city
+        $hum2 = 0; // Total humidity value of 2nd city
+        $clouds1 = 0; // Total clouds rate value of 1st city
+        $clouds2 = 0; // Total clouds rate value of 2nd city
+
+        // Calculate all the totals values we need
+        for ($i = 0; $i < $listSize; $i++) {
+            $temp1 += $compareData['city1full']->list[$i]->main->temp;
+            $temp2 += $compareData['city2full']->list[$i]->main->temp;
+            $hum1 += $compareData['city1full']->list[$i]->main->humidity;
+            $hum2 += $compareData['city2full']->list[$i]->main->humidity;
+            $clouds1 += $compareData['city1full']->list[$i]->clouds->all;
+            $clouds2 += $compareData['city2full']->list[$i]->clouds->all;
+        }
+
+        $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2];
+
+
+        // Treatment for every values
+        foreach ($compareData['average'] as $key => $value) {
+            $value = $value / 40; // Calculate all the average
+
+            // if total values are below zero
+            if ($value < 0) {
+                $value = $value * -1;
+            } else {
+                null;
+            }
+
+            $compareData['average'][$key] = $value;
+        }
+
+        unset($i, $value, $key); // Removing previous operations variables that where created
+
+        // Puting average values into the responseArray
+        $responseArray['city1avg'] = ['temp1' => $compareData['average']['temp1'], 'hum1' => $compareData['average']['hum1'], 'clouds1' => $compareData['average']['clouds1']];
+        $responseArray['city2avg'] = ['temp2' => $compareData['average']['temp2'], 'hum2' => $compareData['average']['hum2'], 'clouds2' => $compareData['average']['clouds2']];
+
+        // Calculate the offset between the recommanded values and the one that weather has
+        $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $treshTemp);
+        $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $treshTemp);
+        $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $treshHum);
+        $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $treshHum);
+        $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $treshClouds);
+        $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $treshClouds);
+        // THESE VALUES ARE NOW OFFSET VALUES!
+
+        // Assign points on the city that has the lowest offset
+        $compareData['city1score'] = 0;
+        $compareData['city2score'] = 0;
+
+        if ($temp1 < $temp2) {
+            $compareData['city1score'] += 20;
+        } elseif ($temp2 < $temp1) {
+            $compareData['city2score'] += 20;
+        }
+
+        if ($hum1 < $hum2) {
+            $compareData['city1score'] += 15;
+        } elseif ($hum2 < $hum1) {
+            $compareData['city2score'] += 15;
+        }
+
+        if ($clouds1 < $clouds2) {
+            $compareData['city1score'] += 10;
+        } elseif ($clouds2 < $clouds1) {
+            $compareData['city2score'] += 10;
+        }
+
+        // $compare->assignPoints($temp1, $temp2, $compareData['city1score'], $compareData['city2score'], 20);
+
+        dd(get_defined_vars());
     }
 }
