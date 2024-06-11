@@ -29,8 +29,8 @@ class ApiController extends AbstractController
         // This array returns API call response in the good format
         $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
         $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
-        $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null];
-        $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null];
+        $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null, 'windavg' => null];
+        $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null, 'windavg' => null];
         $compareData = array(); // This array is only used in the algorythm
 
         // API's here
@@ -68,6 +68,8 @@ class ApiController extends AbstractController
         $hum2 = 0; // Total humidity value of 2nd city
         $clouds1 = 0; // Total clouds rate value of 1st city
         $clouds2 = 0; // Total clouds rate value of 2nd city
+        $wind1 = 0; // Total wind speed value of the 1st city
+        $wind2 = 0; // Total wind speed value of the 2nd city
 
         // Calculate all the totals values we need
         for ($i = 0; $i < $listSize; $i++) {
@@ -77,9 +79,11 @@ class ApiController extends AbstractController
             $hum2 += $compareData['city2full']->list[$i]->main->humidity;
             $clouds1 += $compareData['city1full']->list[$i]->clouds->all;
             $clouds2 += $compareData['city2full']->list[$i]->clouds->all;
+            $wind1 += $compareData['city1full']->list[$i]->wind->speed;
+            $wind2 += $compareData['city2full']->list[$i]->wind->speed;
         }
 
-        $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2];
+        $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2, 'wind1' => $wind1, 'wind2' => $wind2];
 
 
         // Treatment for every values
@@ -129,7 +133,9 @@ class ApiController extends AbstractController
             $compareData['city2score'] += 10;
         }
 
-        // $compare->assignPoints($temp1, $temp2, $compareData['city1score'], $compareData['city2score'], 20);
+        // $compare->assignPoints($temp1, $temp2, $compareData, 20);
+        // $compare->assignPoints($hum1, $hum2, $compareData, 15);
+        // $compare->assignPoints($clouds1, $clouds2, $compareData, 10);
 
         // Determine the winner and the loser
         if ($compareData['city1score'] > $compareData['city2score']) {

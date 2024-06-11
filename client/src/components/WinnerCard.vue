@@ -14,7 +14,7 @@ const props = defineProps({
         </div>
         <p>Is the best city to have a trip for next week!</p><br><br>
         <div class="winnercard-average">
-            <p>Average informations (5 days)</p><br>
+            <p>Average informations<br>(5 days)</p><br>
             <div class="winnercard-infos">
                 <h3 style="color: green;">{{ props.weatherData?.citywinner.name }}, {{ props.weatherData?.citywinner.country }}</h3>
                 <div class="winnercard-temp">

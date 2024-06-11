@@ -33,7 +33,7 @@ function imgSource(source: string): string {
             </div>
     
             <div class="tripcard-wind">
-                <span class="tripcard-icons">💨</span> 3 Km/h
+                <span class="tripcard-icons">💨</span> {{ props.weatherData[0]?.wind }}Km/h
             </div>
         </div>
     </div>
