@@ -23,14 +23,14 @@ class ApiController extends AbstractController
     public function compare(string $city1, string $city2, ParameterBagInterface $parameterBag, CompareService $compare): JsonResponse
     {
         $treshTemp = 27; // Treshold of the wanted temp
-        $treshHhum = 60; // Treshold of the wanted humidity
+        $treshHum = 60; // Treshold of the wanted humidity
         $treshClouds = 15; // Treshold of the wanted clouds rate
 
         // This array returns API call response in the good format
         $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
         $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
-        $responseArray['cityavg1'] = [];
-        $responseArray['cityavg2'] = [];
+        $responseArray['city1avg'] = [];
+        $responseArray['city2avg'] = [];
         $responseArray['citywinner'] = ['name' => null, 'country' => null];
         $compareData = array(); // This array is only used in the algorythm
 
@@ -77,10 +77,12 @@ class ApiController extends AbstractController
 
             $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2];
 
-            // Calculate all the average values we need and put it in the correct place
-            foreach ($compareData['average'] as $key => $value) {
-                $value = $value / 40;
 
+            // Treatment for every values
+            foreach ($compareData['average'] as $key => $value) {
+                $value = $value / 40; // Calculate all the average
+
+                // if total values are below zero
                 if ($value < 0) {
                     $value = $value * -1;
                 } else {
@@ -90,11 +92,18 @@ class ApiController extends AbstractController
                 $compareData['average'][$key] = $value;
             }
 
-            // dd(get_defined_vars());
+            // Puting average values into the responseArray
+            $responseArray['city1avg'] = ['temp1' => $compareData['average']['temp1'], 'hum1' => $compareData['average']['hum1'], 'clouds1' => $compareData['average']['clouds1']];
+            $responseArray['city2avg'] = ['temp2' => $compareData['average']['temp2'], 'hum2' => $compareData['average']['hum2'], 'clouds2' => $compareData['average']['clouds2']];
 
-            $temp1 = $compare->calculateOffset($temp1 / 40, $treshTemp);
-
-            $compare->ifValBelowZero($temp1);
+            // Calculate the offset between the recommanded values and the one that weather has
+            $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $treshTemp);
+            $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $treshTemp);
+            $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $treshHum);
+            $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $treshHum);
+            $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $treshClouds);
+            $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $treshClouds);
+            // THESE VALUES ARE NOW OFFSET VALUES!
 
             dd(get_defined_vars());
         } else {
