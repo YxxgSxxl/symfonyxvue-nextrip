@@ -137,6 +137,15 @@ class ApiController extends AbstractController
 
         // $compare->assignPoints($temp1, $temp2, $compareData['city1score'], $compareData['city2score'], 20);
 
+        // Determine the winner
+        if ($compareData['city1score'] > $compareData['city2score']) {
+            $responseArray['citywinner'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score']];
+            $responseArray['cityloser'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score']];
+        } else {
+            $responseArray['citywinner'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score']];
+            $responseArray['cityloser'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score']];
+        }
+
         dd(get_defined_vars());
     }
 }
