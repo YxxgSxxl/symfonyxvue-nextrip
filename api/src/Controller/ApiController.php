@@ -75,10 +75,12 @@ class ApiController extends AbstractController
                 $clouds2 += $compareData[3]->list[$i]->clouds->all;
             }
 
-            $compareData['totals'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2];
+            $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2];
 
-            foreach ($compareData['totals'] as $key => $value) {
-                # code...
+            // Calculate all the average values we need and put it in the correct place
+            foreach ($compareData['average'] as $key => $value) {
+                $value = $value / 40;
+                $compareData['average'][$key] = $value;
             }
 
             // dd(get_defined_vars());
