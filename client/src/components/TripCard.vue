@@ -16,24 +16,24 @@ function imgSource(source: string): string {
         </div>
 
         <div class="tripcard-name">
-            {{ weatherData?.name }}, {{ weatherData?.sys.country }}
+            New-York, US
         </div>
 
         <div class="tripcard-infos">
             <div class="tripcard-temp">
-                <span class="tripcard-icons">🌡</span> {{ weatherData?.main.temp }}°C
+                <span class="tripcard-icons">🌡</span> 20°C
             </div>
     
             <div class="tripcard-humidity">
-                <span class="tripcard-icons">💧</span> {{ weatherData?.main.humidity }}%
+                <span class="tripcard-icons">💧</span> 12%
             </div>
     
             <div class="tripcard-clouds">
-                <span class="tripcard-icons">☁️</span> {{ weatherData?.clouds.all }}%
+                <span class="tripcard-icons">☁️</span> 2%
             </div>
     
             <div class="tripcard-wind">
-                <span class="tripcard-icons">💨</span> {{ weatherData?.wind.speed }} Km/h
+                <span class="tripcard-icons">💨</span> 3 Km/h
             </div>
         </div>
 

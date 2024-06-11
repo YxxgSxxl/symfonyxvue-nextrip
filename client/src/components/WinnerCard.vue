@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const props = defineProps({
-    winnerData: Object,
     weatherData: Object
 });
 </script>
@@ -11,42 +10,41 @@ const props = defineProps({
     <div class="winnercard">
         <div class="winnercard-name">
             <img src="/crown.svg" alt="Winner Crown" width="50">
-            <h2>✈️ {{ props.winnerData?.city1.name }}</h2>
+            <h2>✈️ New-York, US</h2>
         </div>
         <p>Is the best city to have a trip for next week!</p><br><br>
         <div class="winnercard-average">
             <p>Average informations (5 days)</p><br>
             <div class="winnercard-infos">
-                <h3 style="color: green;">{{ winnerData?.city1.name }}</h3>
+                <h3 style="color: green;">New-York</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city1.temp }}°C // Attention à fix, toutes ces valeurs ne sont pas la moyenne du temps sur 5j mais l'écart par rapport aux valeurs définies qui donnent les points tout ça en moyenne
+                    <span class="winnercard-icons">🌡</span> {{ props.weatherData }}°C
                 </div>
             
                 <div class="winnercard-humidity">
-                    <span class="winnercard-icons">💧</span> {{ winnerData?.city1.humidity }}%
+                    <span class="winnercard-icons">💧</span> 20%
                 </div>
             
                 <div class="winnercard-clouds">
-                    <span class="winnercard-icons">☁️</span> {{ winnerData?.city1.clouds }}%
+                    <span class="winnercard-icons">☁️</span> 5%
                 </div><br>
 
                 <div class="winnercard-arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M5 12l7 7 7-7"/></svg>
                 </div><br>
 
-                <h3 style="color: red;">{{ winnerData?.city2.name }}</h3>
+                <h3 style="color: red;">Paris</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ winnerData?.city2.temp }}°C
+                    <span class="winnercard-icons">🌡</span> 12°C
                 </div>
             
                 <div class="winnercard-humidity">
-                    <span class="winnercard-icons">💧</span> {{ winnerData?.city2.humidity }}%
+                    <span class="winnercard-icons">💧</span> 80%
                 </div>
             
                 <div class="winnercard-clouds">
-                    <span class="winnercard-icons">☁️</span> {{ winnerData?.city2.clouds }}%
+                    <span class="winnercard-icons">☁️</span> 27%
                 </div>
-                <!-- {{ winnerData?.city2 }} -->
             </div>
         </div>
     </div>

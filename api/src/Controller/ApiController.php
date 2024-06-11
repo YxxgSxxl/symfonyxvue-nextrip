@@ -31,8 +31,8 @@ class ApiController extends AbstractController
         $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
         $responseArray['city1avg'] = [];
         $responseArray['city2avg'] = [];
-        $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null];
-        $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null];
+        $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null];
+        $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null];
         $compareData = array(); // This array is only used in the algorythm
 
         // API's here
@@ -137,15 +137,17 @@ class ApiController extends AbstractController
 
         // $compare->assignPoints($temp1, $temp2, $compareData['city1score'], $compareData['city2score'], 20);
 
-        // Determine the winner
+        // Determine the winner and the loser
         if ($compareData['city1score'] > $compareData['city2score']) {
-            $responseArray['citywinner'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score']];
-            $responseArray['cityloser'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score']];
-        } else {
-            $responseArray['citywinner'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score']];
-            $responseArray['cityloser'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score']];
+            $responseArray['citywinner'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
+            $responseArray['cityloser'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score'], 'tempavg' => $compareData['average']['temp2'], 'humavg' => $compareData['average']['hum2'], 'cloudsavg' => $compareData['average']['clouds2']];
+        } elseif ($compareData['city2score'] > $compareData['city1score']) {
+            $responseArray['citywinner'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score'], 'tempavg' => $compareData['average']['temp2'], 'humavg' => $compareData['average']['hum2'], 'cloudsavg' => $compareData['average']['clouds2']];
+            $responseArray['cityloser'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
         }
 
-        dd(get_defined_vars());
+        // dd(get_defined_vars());
+
+        return $this->json($responseArray);
     }
 }
