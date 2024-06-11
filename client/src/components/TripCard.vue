@@ -12,24 +12,24 @@ function imgSource(source: string): string {
     <div class="tripcard">
         <p>TODAY</p>
         <div class="tripcard-icon">
-            <img :src="imgSource(props.weatherData?.weather[0].icon)" alt=""> 
+            <img :src="imgSource(props.weatherData[0]?.icon)" alt=""> 
         </div>
 
         <div class="tripcard-name">
-            New-York, US
+            {{ props.weatherData[0]?.name }}, {{ props.weatherData[0]?.country }}
         </div>
 
         <div class="tripcard-infos">
             <div class="tripcard-temp">
-                <span class="tripcard-icons">🌡</span> 20°C
+                <span class="tripcard-icons">🌡</span> {{ props.weatherData[0]?.temp }}°C
             </div>
     
             <div class="tripcard-humidity">
-                <span class="tripcard-icons">💧</span> 12%
+                <span class="tripcard-icons">💧</span> {{ props.weatherData[0]?.humidity }}%
             </div>
     
             <div class="tripcard-clouds">
-                <span class="tripcard-icons">☁️</span> 2%
+                <span class="tripcard-icons">☁️</span> {{ props.weatherData[0]?.clouds }}%
             </div>
     
             <div class="tripcard-wind">

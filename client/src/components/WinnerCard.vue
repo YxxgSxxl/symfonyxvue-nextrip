@@ -10,40 +10,40 @@ const props = defineProps({
     <div class="winnercard">
         <div class="winnercard-name">
             <img src="/crown.svg" alt="Winner Crown" width="50">
-            <h2>✈️ New-York, US</h2>
+            <h2>✈️ {{ props.weatherData?.citywinner.name }}, {{ props.weatherData?.citywinner.country }}</h2>
         </div>
         <p>Is the best city to have a trip for next week!</p><br><br>
         <div class="winnercard-average">
             <p>Average informations (5 days)</p><br>
             <div class="winnercard-infos">
-                <h3 style="color: green;">New-York</h3>
+                <h3 style="color: green;">{{ props.weatherData?.citywinner.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> {{ props.weatherData }}°C
+                    <span class="winnercard-icons">🌡</span> {{ props.weatherData?.citywinner.tempavg.toFixed(2) }}°C
                 </div>
             
                 <div class="winnercard-humidity">
-                    <span class="winnercard-icons">💧</span> 20%
+                    <span class="winnercard-icons">💧</span> {{ props.weatherData?.citywinner.humavg.toFixed(2) }}%
                 </div>
             
                 <div class="winnercard-clouds">
-                    <span class="winnercard-icons">☁️</span> 5%
+                    <span class="winnercard-icons">☁️</span> {{ props.weatherData?.citywinner.cloudsavg.toFixed(2) }}%
                 </div><br>
 
                 <div class="winnercard-arrow">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M5 12l7 7 7-7"/></svg>
                 </div><br>
 
-                <h3 style="color: red;">Paris</h3>
+                <h3 style="color: red;">{{ props.weatherData?.cityloser.name }}</h3>
                 <div class="winnercard-temp">
-                    <span class="winnercard-icons">🌡</span> 12°C
+                    <span class="winnercard-icons">🌡</span> {{ props.weatherData?.cityloser.tempavg.toFixed(2) }}°C
                 </div>
             
                 <div class="winnercard-humidity">
-                    <span class="winnercard-icons">💧</span> 80%
+                    <span class="winnercard-icons">💧</span> {{ props.weatherData?.cityloser.humavg.toFixed(2) }}%
                 </div>
             
                 <div class="winnercard-clouds">
-                    <span class="winnercard-icons">☁️</span> 27%
+                    <span class="winnercard-icons">☁️</span> {{ props.weatherData?.cityloser.cloudsavg.toFixed(2) }}%
                 </div>
             </div>
         </div>

@@ -29,8 +29,6 @@ class ApiController extends AbstractController
         // This array returns API call response in the good format
         $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
         $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
-        $responseArray['city1avg'] = [];
-        $responseArray['city2avg'] = [];
         $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null];
         $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null];
         $compareData = array(); // This array is only used in the algorythm
@@ -100,10 +98,6 @@ class ApiController extends AbstractController
 
         unset($i, $value, $key); // Removing previous operations variables that where created
 
-        // Puting average values into the responseArray
-        $responseArray['city1avg'] = ['temp1' => $compareData['average']['temp1'], 'hum1' => $compareData['average']['hum1'], 'clouds1' => $compareData['average']['clouds1']];
-        $responseArray['city2avg'] = ['temp2' => $compareData['average']['temp2'], 'hum2' => $compareData['average']['hum2'], 'clouds2' => $compareData['average']['clouds2']];
-
         // Calculate the offset between the recommanded values and the one that weather has
         $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $treshTemp);
         $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $treshTemp);
@@ -147,6 +141,14 @@ class ApiController extends AbstractController
         }
 
         // dd(get_defined_vars());
+
+        // Formating to make it readable by the front-end
+        $responseArray['citiestoday'] = array(
+            array($responseArray['city1today']),
+            array($responseArray['city2today']),
+        );
+
+        unset($responseArray['city1today'], $responseArray['city2today']);
 
         return $this->json($responseArray);
     }

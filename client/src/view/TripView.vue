@@ -76,11 +76,11 @@ async function submitForm(query: any) {
 
         <div class="trip-winwrapper" v-if="searched">
             <ConfettiExplosion class="trip-conffeti" :particleCount="100" :particleSize="7" :duration="3000" />
-            <WinnerCard :weatherData="data_weather.data" :winnerData="d" />
+            <WinnerCard :weatherData="data_weather.data" />
         </div>
 
         <div class="trip-cwrapper" v-if="searched">
-            <!-- <TripCard v-for="(data, i) in data_weather.data[0].cities" :key="i" :weatherData="data" /> -->
+            <TripCard v-for="(data, i) in data_weather.data.citiestoday" :key="i" :weatherData="data" />
         </div>
     </div>
 </template>
