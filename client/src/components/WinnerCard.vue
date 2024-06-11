@@ -95,6 +95,10 @@ const props = defineProps({
 @media (min-width: 1200px) {
     .winnercard {
             width: 25%;
+
+            &-infos {
+                font-size: 1.2em;
+            }
     }
 }
 </style>
