@@ -133,9 +133,9 @@ class ApiController extends AbstractController
             $compareData['city2score'] += 10;
         }
 
-        // $compare->assignPoints($temp1, $temp2, $compareData, 20);
-        // $compare->assignPoints($hum1, $hum2, $compareData, 15);
-        // $compare->assignPoints($clouds1, $clouds2, $compareData, 10);
+        // $compare->assignPoints($temp1, $temp2, 20);
+        // $compare->assignPoints($hum1, $hum2, 15);
+        // $compare->assignPoints($clouds1, $clouds2, 10);
 
         // Determine the winner and the loser
         if ($compareData['city1score'] > $compareData['city2score']) {

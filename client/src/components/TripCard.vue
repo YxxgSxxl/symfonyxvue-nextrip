@@ -75,7 +75,7 @@ function imgSource(source: string): string {
     &-name {
         align-items: center;
         text-align: center;
-        font-size: 1.5em;
+        font-size: 1.2em;
         font-weight: 500;
         margin-bottom: 1rem;
     }
@@ -96,13 +96,21 @@ function imgSource(source: string): string {
 @media (min-width: 768px) {
     .tripcard {
             width: 50%;
+
+        &-name {
+            font-size: 1.4em;
+        }
     }
 }
 
 /* Large desktop Responsive */
 @media (min-width: 1200px) {
     .tripcard {
-            width: 25%;
+            width: 30%;
+
+        &-name {
+            font-size: 1.6em;
+        }
     }
 }
 </style>

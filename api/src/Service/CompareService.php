@@ -16,7 +16,7 @@ class CompareService
         return $averageValue;
     }
 
-    public function assignPoints(int|float $city1offset, int|float $city2offset, array $compareData, int $points)
+    public function assignPoints(int|float $city1offset, int|float $city2offset, int $points)
     {
         if ($city1offset < $city2offset) {
             $compareData['city1score'] += $points;

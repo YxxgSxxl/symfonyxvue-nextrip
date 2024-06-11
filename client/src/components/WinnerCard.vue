@@ -95,7 +95,7 @@ const props = defineProps({
 /* Large desktop Responsive */
 @media (min-width: 1200px) {
     .winnercard {
-            width: 25%;
+            width: 30%;
 
             h2 {
                 font-size: 2em;
