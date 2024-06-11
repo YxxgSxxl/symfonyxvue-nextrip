@@ -80,6 +80,13 @@ class ApiController extends AbstractController
             // Calculate all the average values we need and put it in the correct place
             foreach ($compareData['average'] as $key => $value) {
                 $value = $value / 40;
+
+                if ($value < 0) {
+                    $value = $value * -1;
+                } else {
+                    null;
+                }
+
                 $compareData['average'][$key] = $value;
             }
 
@@ -89,7 +96,7 @@ class ApiController extends AbstractController
 
             $compare->ifValBelowZero($temp1);
 
-            dd(get_defined_vars(), $temp1);
+            dd(get_defined_vars());
         } else {
             null;
         }
