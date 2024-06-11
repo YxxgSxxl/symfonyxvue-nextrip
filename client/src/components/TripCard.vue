@@ -36,8 +36,6 @@ function imgSource(source: string): string {
                 <span class="tripcard-icons">💨</span> 3 Km/h
             </div>
         </div>
-
-        <!-- {{ weatherData }} -->
     </div>
 </template>
 

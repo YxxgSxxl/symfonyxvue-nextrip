@@ -16,7 +16,7 @@ const props = defineProps({
         <div class="winnercard-average">
             <p>Average informations (5 days)</p><br>
             <div class="winnercard-infos">
-                <h3 style="color: green;">{{ props.weatherData?.citywinner.name }}</h3>
+                <h3 style="color: green;">{{ props.weatherData?.citywinner.name }}, {{ props.weatherData?.citywinner.country }}</h3>
                 <div class="winnercard-temp">
                     <span class="winnercard-icons">🌡</span> {{ props.weatherData?.citywinner.tempavg.toFixed(2) }}°C
                 </div>
@@ -33,7 +33,7 @@ const props = defineProps({
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M5 12l7 7 7-7"/></svg>
                 </div><br>
 
-                <h3 style="color: red;">{{ props.weatherData?.cityloser.name }}</h3>
+                <h3 style="color: red;">{{ props.weatherData?.cityloser.name }}, {{ props.weatherData?.cityloser.country }}</h3>
                 <div class="winnercard-temp">
                     <span class="winnercard-icons">🌡</span> {{ props.weatherData?.cityloser.tempavg.toFixed(2) }}°C
                 </div>
@@ -69,6 +69,7 @@ const props = defineProps({
     margin-bottom: 2rem;
 
     h2 {
+        font-size: 1.4em;
         background: linear-gradient(#00aaff, #007ab7);
         background-size: 100%;
         background-clip: text;
@@ -95,6 +96,10 @@ const props = defineProps({
 @media (min-width: 1200px) {
     .winnercard {
             width: 25%;
+
+            h2 {
+                font-size: 2em;
+            }
 
             &-infos {
                 font-size: 1.2em;
