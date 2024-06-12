@@ -10,7 +10,7 @@ class CompareService
      * 
      * returns a int/float value.
      */
-    public function calculateOffset(int|float $averageValue, int $amount)
+    public function calculateOffset(int|float $averageValue, int $amount): int
     {
         $averageValue = $averageValue - $amount; // Offset of the average
 
@@ -43,7 +43,7 @@ class CompareService
      * 
      * returns a winner with his values and a loser in an array.
      */
-    public function determineWinLose(array &$compareData, array &$responseArray)
+    public function determineWinLose(array &$compareData, array &$responseArray): void
     {
         if ($compareData['city1score'] > $compareData['city2score']) {
             $responseArray['citywinner'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
