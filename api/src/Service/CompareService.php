@@ -4,6 +4,7 @@ namespace App\Service;
 
 class CompareService
 {
+
     /**
      * This function calculates the offset of the average
      * and if the value is below zero, it makes it positive.
@@ -12,13 +13,7 @@ class CompareService
      */
     public function calculateOffset(int|float $averageValue, int $amount): int
     {
-        $averageValue = $averageValue - $amount; // Offset of the average
-
-        // If value is below 0 (negative number)
-        if ($averageValue < 0) {
-            $averageValue = $averageValue * -1;
-        }
-
+        $averageValue = abs($averageValue - $amount); // Offset of the average
         return $averageValue;
     }
 
@@ -30,11 +25,13 @@ class CompareService
      */
     public function assignPoints(int|float $city1offset, int|float $city2offset, array &$compareData, int $points): void
     {
+        // TODO camelCase partout
         if ($city1offset < $city2offset) {
             $compareData['city1score'] += $points;
         } elseif ($city2offset < $city1offset) {
             $compareData['city2score'] += $points;
         }
+        //TODO : Qu'est ce qu'on fait si la différence est égale à 0 ?
     }
 
     /**
@@ -52,5 +49,6 @@ class CompareService
             $responseArray['citywinner'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score'], 'tempavg' => $compareData['average']['temp2'], 'humavg' => $compareData['average']['hum2'], 'cloudsavg' => $compareData['average']['clouds2']];
             $responseArray['cityloser'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
         }
+        // TODO Que fait-on si on a égalité ?
     }
 }

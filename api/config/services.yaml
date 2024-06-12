@@ -5,7 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
   #   API_KEY: "%env(API_KEY)%"
-  API_KEY_SECRET: "%env(API_KEY_SECRET)%"
+  api:
+    secret: "%env(API_KEY_SECRET)%"
+    url: "https://api.openweathermap.org/data/2.5/"
 
 services:
   # default configuration for services in *this* file

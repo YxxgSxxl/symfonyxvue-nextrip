@@ -2,15 +2,30 @@
 
 namespace App\Controller;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use App\Service\CompareService; // Custom service that help comparing datas
 
 class ApiController extends AbstractController
 {
+
+    private array $apiConfig;
+    private string $apiBaseUrl;
+    private string $apiKey;
+
+    // TODO Mettre l'intelligence dans un service
+    public function __construct(ParameterBagInterface $parameterBag)
+    {
+        $this->apiConfig = $parameterBag->get("api");
+        $this->apiBaseUrl = $this->apiConfig['url'];
+        $this->apiKey = $this->apiConfig['secret'];
+    }
+
     #[Route('/', name: 'app_index')]
     public function index(string $message = null): JsonResponse
     {
@@ -20,7 +35,7 @@ class ApiController extends AbstractController
     }
 
     #[Route('/api/{city1}/{city2}', name: 'app_api')]
-    public function compare(string $city1, string $city2, ParameterBagInterface $parameterBag, CompareService $compare): JsonResponse
+    public function compare(string $city1, string $city2, ParameterBagInterface $parameterBag, CompareService $compare, HttpClientInterface $client): JsonResponse
     {
         $treshTemp = 27; // Treshold of the wanted temp
         $treshHum = 60; // Treshold of the wanted humidity
@@ -28,29 +43,54 @@ class ApiController extends AbstractController
 
         // This array returns API call response in the good format
         $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
-        $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
+        $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => 10, 'clouds' => null, 'wind' => null];
         $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null, 'windavg' => null];
         $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null, 'windavg' => null];
         $compareData = array(); // This array is only used in the algorythm
 
         // API's here
-        $owm_base = "https://api.openweathermap.org/data/2.5/";
-        $api_key = $parameterBag->get("API_KEY_SECRET");
-
         // First API calls
-        $getWeather1 = file_get_contents($owm_base . "weather?q=" . $city1 . "&units=metric&appid=" . $api_key, true);
-        $getWeather2 = file_get_contents($owm_base . "weather?q=" . $city2 . "&units=metric&appid=" . $api_key, true);
+        try {
+            // TODO: Faire les appels via le HttpClient
+            $getWeather1 = $client->request('GET', $this->apiBaseUrl . "weather?q=" . $city1 . "&units=metric&appid=" . $this->apiKey)->toArray();
+        } catch (Exception $e) {
+            // TODO: Gérer toutes les erreurs
+            return new JsonResponse(['error' => ['message' => 'OpenWeather est indisponible']]);
+        }
 
-        $compareData = [json_decode($getWeather1), json_decode($getWeather2)]; // decode JSON received by the call to make the final calls after
+        if (
+            !isset($getWeather1['weather']) ||
+            !isset($getWeather1['weather']['icon'])
+        ) {
+            // TODO : Error
+        }
+
+        $getWeather2 = file_get_contents($this->apiBaseUrl . "weather?q=" . $city2 . "&units=metric&appid=" . $this->apiKey, true);
+
+        // TODO: Utiliser des noms pour les clés plutôt que des numéros
+        $compareData = ['city1' => $getWeather1, json_decode($getWeather2)]; // decode JSON received by the call to make the final calls after
 
         // Second API calls
-        $getWeatherFull1 = file_get_contents($owm_base . "forecast?lat=" . $compareData[0]->coord->lat . "&lon=" . $compareData[0]->coord->lon . "&units=metric&appid=" . $api_key, true);
-        $getWeatherFull2 = file_get_contents($owm_base . "forecast?lat=" . $compareData[1]->coord->lat . "&lon=" . $compareData[1]->coord->lon . "&units=metric&appid=" . $api_key, true);
+        $getCity1WeatherUrl = $this->getWeatherUrl($compareData['city1']);
+        $getCity2WeatherUrl = $this->getWeatherUrl($compareData[1]);
 
-        $compareData = [json_decode($getWeather1), json_decode($getWeather2), json_decode($getWeatherFull1), json_decode($getWeatherFull2)]; // Final Array format
+        $getWeatherFull1 = file_get_contents($getCity1WeatherUrl, true);
+        $getWeatherFull2 = file_get_contents($getCity2WeatherUrl, true);
+
+        $compareData = [$getWeather1, json_decode($getWeather2), json_decode($getWeatherFull1), json_decode($getWeatherFull2)]; // Final Array format
 
         // Save data needed into responseData Array
-        $responseArray['city1today'] = ['icon' => $compareData[0]->weather[0]->icon, 'name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'temp' => $compareData[0]->main->temp, 'humidity' => $compareData[0]->main->humidity, 'clouds' => $compareData[0]->clouds->all, 'wind' => $compareData[0]->wind->speed];
+        // TODO: Mettre en forme
+        $responseArray['city1today'] = [
+            'icon' => $compareData['city1']['weather']['icon'],
+            'name' => $compareData[0]->name,
+            'country' => $compareData[0]->sys->country,
+            'temp' => $compareData[0]->main->temp,
+            'humidity' => $compareData[0]->main->humidity,
+            'clouds' => $compareData[0]->clouds->all,
+            'wind' => $compareData[0]->wind->speed
+        ];
+
         $responseArray['city2today'] = ['icon' => $compareData[1]->weather[0]->icon, 'name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'temp' => $compareData[1]->main->temp, 'humidity' => $compareData[1]->main->humidity, 'clouds' => $compareData[1]->clouds->all, 'wind' => $compareData[1]->wind->speed];
 
         // if ($compareData[0]->name != $compareData[2]->city->name || $compareData[1]->name != $compareData[3]->city->name) {
@@ -83,15 +123,16 @@ class ApiController extends AbstractController
             $wind2 += $compareData['city2full']->list[$i]->wind->speed;
         }
 
-        $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2, 'wind1' => $wind1, 'wind2' => $wind2];
+        $compareData['total'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2, 'wind1' => $wind1, 'wind2' => $wind2];
 
         // Treatment for every average values
         foreach ($compareData['average'] as $key => $value) {
+            // TODO: Utiliser le vrai nombre de ligne ($listSize ?)
             $value = $value / 40; // Calculate all the average
 
             // if total values are below zero
             if ($value < 0) {
-                $value = $value * -1;
+                $value = $value * -1; // TODO: Pas sûr car -20 se transforme en 20, et ça fausse le résultat
             } else {
                 null;
             }
@@ -99,9 +140,12 @@ class ApiController extends AbstractController
             $compareData['average'][$key] = $value;
         }
 
+        //dump(memory_get_usage());
         unset($i, $value, $key); // Removing previous operations variables that where created
+        //dump(memory_get_usage());
 
         // Calculate the offset between the recommanded values and the one that weather has
+        // TODO Mettre les tresh idéaux dans le service en const
         $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $treshTemp);
         $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $treshTemp);
         $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $treshHum);
@@ -114,6 +158,7 @@ class ApiController extends AbstractController
         $compareData['city1score'] = 0;
         $compareData['city2score'] = 0;
 
+        // TODO: Mettre les points dans le service en const
         $compare->assignPoints($temp1, $temp2, $compareData, 20);
         $compare->assignPoints($hum1, $hum2, $compareData, 15);
         $compare->assignPoints($clouds1, $clouds2, $compareData, 10);
@@ -125,12 +170,24 @@ class ApiController extends AbstractController
 
         // Formating to make it readable by the front-end
         $responseArray['citiestoday'] = array(
-            array($responseArray['city1today']),
-            array($responseArray['city2today']),
+            array("score" => $responseArray['city1today']),
+            array("score" => $responseArray['city2today']),
         );
 
         unset($responseArray['city1today'], $responseArray['city2today']); // Removing previous operations variables that where created
 
         return $this->json($responseArray);
+    }
+
+
+    public function getWeatherUrl(object $compareDataElement): string
+    {
+        $getWeatherParams = [
+            'lat' => $compareDataElement->coord->lat,
+            'lon' => $compareDataElement->coord->lon,
+            'units' => 'metric',
+            'appid' => $this->apiKey
+        ];
+        return $this->apiBaseUrl . '?' . http_build_query($getWeatherParams);
     }
 }
