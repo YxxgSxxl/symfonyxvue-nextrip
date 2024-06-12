@@ -23,7 +23,7 @@ async function submitForm(query: any) {
     })
     .then(res => {
         return res
-    })
+    })  
     .then(json => {
         isLoading.value = false
         searched.value = true
