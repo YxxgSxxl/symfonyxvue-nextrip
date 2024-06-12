@@ -130,7 +130,7 @@ class ApiController extends AbstractController
             array($responseArray['city2today']),
         );
 
-        unset($responseArray['city1today'], $responseArray['city2today']);
+        unset($responseArray['city1today'], $responseArray['city2today']); // Removing previous operations variables that where created
 
         return $this->json($responseArray);
     }
