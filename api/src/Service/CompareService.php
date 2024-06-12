@@ -8,7 +8,7 @@ class CompareService
      * This function calculates the offset of the average
      * and if the value is below zero, it makes it positive.
      * 
-     * returns a int/float value
+     * returns a int/float value.
      */
     public function calculateOffset(int|float $averageValue, int $amount)
     {
@@ -26,7 +26,7 @@ class CompareService
      * This function compare wich offset is the lowest
      * and assigns points to the right array key.
      * 
-     * returns a int value into an array
+     * returns a int value into an array.
      */
     public function assignPoints(int|float $city1offset, int|float $city2offset, array &$compareData, int $points): void
     {
@@ -38,10 +38,10 @@ class CompareService
     }
 
     /**
-     * This 
-     * .
+     * This function compare and determine the winner and the loser
+     * by comparing the score of the two cities.
      * 
-     * returns 
+     * returns a winner with his values and a loser in an array.
      */
     public function determineWinLose(array &$compareData, array &$responseArray)
     {
