@@ -53,11 +53,11 @@ class ApiController extends AbstractController
         $responseArray['city1today'] = ['icon' => $compareData[0]->weather[0]->icon, 'name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'temp' => $compareData[0]->main->temp, 'humidity' => $compareData[0]->main->humidity, 'clouds' => $compareData[0]->clouds->all, 'wind' => $compareData[0]->wind->speed];
         $responseArray['city2today'] = ['icon' => $compareData[1]->weather[0]->icon, 'name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'temp' => $compareData[1]->main->temp, 'humidity' => $compareData[1]->main->humidity, 'clouds' => $compareData[1]->clouds->all, 'wind' => $compareData[1]->wind->speed];
 
-        // Algorythm part
-        if ($compareData[0]->name != $compareData[2]->city->name || $compareData[1]->name != $compareData[3]->city->name) {
-            return null; // error
-        }
+        // if ($compareData[0]->name != $compareData[2]->city->name || $compareData[1]->name != $compareData[3]->city->name) {
+        //     return null; // error
+        // }
 
+        // Algorythm part
         $listSize = count($compareData[2]->list); // value size of the weather list
         $compareData['city1full'] = $compareData[2];
         $compareData['city2full'] = $compareData[3];
@@ -85,8 +85,7 @@ class ApiController extends AbstractController
 
         $compareData['average'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2, 'wind1' => $wind1, 'wind2' => $wind2];
 
-
-        // Treatment for every values
+        // Treatment for every average values
         foreach ($compareData['average'] as $key => $value) {
             $value = $value / 40; // Calculate all the average
 
