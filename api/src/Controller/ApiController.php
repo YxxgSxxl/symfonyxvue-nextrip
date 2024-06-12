@@ -115,27 +115,29 @@ class ApiController extends AbstractController
         $compareData['city1score'] = 0;
         $compareData['city2score'] = 0;
 
-        if ($temp1 < $temp2) {
-            $compareData['city1score'] += 20;
-        } elseif ($temp2 < $temp1) {
-            $compareData['city2score'] += 20;
-        }
+        // if ($temp1 < $temp2) {
+        //     $compareData['city1score'] += 20;
+        // } elseif ($temp2 < $temp1) {
+        //     $compareData['city2score'] += 20;
+        // }
 
-        if ($hum1 < $hum2) {
-            $compareData['city1score'] += 15;
-        } elseif ($hum2 < $hum1) {
-            $compareData['city2score'] += 15;
-        }
+        // if ($hum1 < $hum2) {
+        //     $compareData['city1score'] += 15;
+        // } elseif ($hum2 < $hum1) {
+        //     $compareData['city2score'] += 15;
+        // }
 
-        if ($clouds1 < $clouds2) {
-            $compareData['city1score'] += 10;
-        } elseif ($clouds2 < $clouds1) {
-            $compareData['city2score'] += 10;
-        }
+        // if ($clouds1 < $clouds2) {
+        //     $compareData['city1score'] += 10;
+        // } elseif ($clouds2 < $clouds1) {
+        //     $compareData['city2score'] += 10;
+        // }
 
-        // $compare->assignPoints($temp1, $temp2, 20);
-        // $compare->assignPoints($hum1, $hum2, 15);
-        // $compare->assignPoints($clouds1, $clouds2, 10);
+
+
+        $compare->assignPoints($temp1, $temp2, $compareData, 20);
+        $compare->assignPoints($hum1, $hum2, $compareData, 15);
+        $compare->assignPoints($clouds1, $clouds2, $compareData, 10);
 
         // Determine the winner and the loser
         if ($compareData['city1score'] > $compareData['city2score']) {
