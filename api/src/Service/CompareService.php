@@ -4,16 +4,19 @@ namespace App\Service;
 
 class CompareService
 {
-    public $treshTemp;
-    public $treshHum;
-    public $treshClouds;
+    const TRESH_TEMP = 27;
+    const TEMP_POINTS = 20;
+    const TRESH_HUM = 60;
+    const HUM_POINTS = 15;
+    const TRESH_CLOUDS = 15;
+    const CLOUDS_POINTS = 10;
 
-    public function __construct(int $treshTemp = 27, int $treshHum = 60, int $treshClouds = 15)
-    {
-        $this->treshTemp = $treshTemp; // Treshold of the wanted temp
-        $this->treshHum = $treshHum; // Treshold of the wanted humidity
-        $this->treshClouds = $treshClouds; // Treshold of the wanted clouds rate
-    }
+    // public function __construct(int $treshTemp = 27, int $treshHum = 60, int $treshClouds = 15)
+    // {
+    //     $this->treshTemp = $treshTemp; // Treshold of the wanted temp
+    //     $this->treshHum = $treshHum; // Treshold of the wanted humidity
+    //     $this->treshClouds = $treshClouds; // Treshold of the wanted clouds rate
+    // }
 
     /**
      * This function calculates the offset of the average
@@ -53,11 +56,11 @@ class CompareService
     public function determineWinLose(array &$compareData, array &$responseArray): void
     {
         if ($compareData['city1score'] > $compareData['city2score']) {
-            $responseArray['citywinner'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
-            $responseArray['cityloser'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score'], 'tempavg' => $compareData['average']['temp2'], 'humavg' => $compareData['average']['hum2'], 'cloudsavg' => $compareData['average']['clouds2']];
+            $responseArray['citywinner'] = ['name' => $compareData['city1']['name'], 'country' => $compareData['city1']['sys']['country'], 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
+            $responseArray['cityloser'] = ['name' => $compareData['city2']['name'], 'country' => $compareData['city2']['sys']['country'], 'score' => $compareData['city2score'], 'tempavg' => $compareData['average']['temp2'], 'humavg' => $compareData['average']['hum2'], 'cloudsavg' => $compareData['average']['clouds2']];
         } elseif ($compareData['city2score'] > $compareData['city1score']) {
-            $responseArray['citywinner'] = ['name' => $compareData[1]->name, 'country' => $compareData[1]->sys->country, 'score' => $compareData['city2score'], 'tempavg' => $compareData['average']['temp2'], 'humavg' => $compareData['average']['hum2'], 'cloudsavg' => $compareData['average']['clouds2']];
-            $responseArray['cityloser'] = ['name' => $compareData[0]->name, 'country' => $compareData[0]->sys->country, 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
+            $responseArray['citywinner'] = ['name' => $compareData['city2']['name'], 'country' => $compareData['city2']['sys']['country'], 'score' => $compareData['city2score'], 'tempavg' => $compareData['average']['temp2'], 'humavg' => $compareData['average']['hum2'], 'cloudsavg' => $compareData['average']['clouds2']];
+            $responseArray['cityloser'] = ['name' => $compareData['city1']['name'], 'country' => $compareData['city1']['sys']['country'], 'score' => $compareData['city1score'], 'tempavg' => $compareData['average']['temp1'], 'humavg' => $compareData['average']['hum1'], 'cloudsavg' => $compareData['average']['clouds1']];
         }
         // TODO Que fait-on si on a égalité ?
     }

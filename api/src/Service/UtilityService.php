@@ -2,8 +2,21 @@
 
 namespace App\Service;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 class UtilityService
 {
+    public array $apiConfig;
+    public string $apiBaseUrl;
+    public string $apiKey;
+
+    public function __construct(ParameterBagInterface $parameterBag)
+    {
+        $this->apiConfig = $parameterBag->get("api");
+        $this->apiBaseUrl = $this->apiConfig['url'];
+        $this->apiKey = $this->apiConfig['secret'];
+    }
+
     public function getWeatherUrl(string $queryType, string $cityname, int|string $apiKey, int|string $apiBaseUrl): string
     {
         $getWeatherParams = [

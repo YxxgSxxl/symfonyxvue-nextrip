@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -14,19 +13,6 @@ use App\Service\UtilityService; // Custom service to help the algorythm init dat
 
 class ApiController extends AbstractController
 {
-
-    private array $apiConfig;
-    private string $apiBaseUrl;
-    private string $apiKey;
-
-    // TODO Mettre l'intelligence dans un service
-    public function __construct(ParameterBagInterface $parameterBag)
-    {
-        $this->apiConfig = $parameterBag->get("api");
-        $this->apiBaseUrl = $this->apiConfig['url'];
-        $this->apiKey = $this->apiConfig['secret'];
-    }
-
     #[Route('/', name: 'app_index')]
     public function index(string $message = null): JsonResponse
     {
@@ -36,7 +22,7 @@ class ApiController extends AbstractController
     }
 
     #[Route('/api/{city1}/{city2}', name: 'app_api')]
-    public function compare(string $city1, string $city2, HttpClientInterface $client, ParameterBagInterface $parameterBag, CompareService $compare, UtilityService $utility): JsonResponse
+    public function compare(string $city1, string $city2, HttpClientInterface $client, CompareService $compare, UtilityService $utility): JsonResponse
     {
         // This array returns API call response in the good format
         $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
@@ -47,8 +33,8 @@ class ApiController extends AbstractController
 
         // First API calls
         try {
-            $getWeather1 = $client->request('GET', $utility->getWeatherUrl('weather', $city1, $this->apiKey, $this->apiBaseUrl))->toArray();
-            $getWeather2 = $client->request('GET', $utility->getWeatherUrl('weather', $city2, $this->apiKey, $this->apiBaseUrl))->toArray();
+            $getWeather1 = $client->request('GET', $utility->getWeatherUrl('weather', $city1, $utility->apiKey, $utility->apiBaseUrl))->toArray();
+            $getWeather2 = $client->request('GET', $utility->getWeatherUrl('weather', $city2, $utility->apiKey, $utility->apiBaseUrl))->toArray();
         } catch (Exception $e) {
             // TODO: Gérer toutes les erreurs
             return new JsonResponse(['error' => ['message' => 'OpenWeather est indisponible']]);
@@ -70,8 +56,8 @@ class ApiController extends AbstractController
 
         // Second API calls
         try {
-            $getCity1WeatherUrl = $client->request('GET', $utility->getWeatherFullUrl('forecast', $compareData['city1'], $this->apiKey, $this->apiBaseUrl))->toArray();
-            $getCity2WeatherUrl = $client->request('GET', $utility->getWeatherFullUrl('forecast', $compareData['city2'], $this->apiKey, $this->apiBaseUrl))->toArray();
+            $getCity1WeatherUrl = $client->request('GET', $utility->getWeatherFullUrl('forecast', $compareData['city1'], $utility->apiKey, $utility->apiBaseUrl))->toArray();
+            $getCity2WeatherUrl = $client->request('GET', $utility->getWeatherFullUrl('forecast', $compareData['city2'], $utility->apiKey, $utility->apiBaseUrl))->toArray();
         } catch (Exception $e) {
             // TODO: Gérer toutes les erreurs
             return new JsonResponse(['error' => ['message' => 'OpenWeather est indisponible']]);
@@ -126,39 +112,32 @@ class ApiController extends AbstractController
         // dump(memory_get_usage());
 
         // Calculate the offset between the recommanded values and the one that weather has
-        // TODO Mettre les tresh idéaux dans le service en const
-        $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $compare->treshTemp);
-        $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $compare->treshTemp);
-        $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $compare->treshHum);
-        $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $compare->treshHum);
-        $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $compare->treshClouds);
-        $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $compare->treshClouds);
+        $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $compare::TRESH_TEMP);
+        $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $compare::TRESH_TEMP);
+        $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $compare::TRESH_HUM);
+        $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $compare::TRESH_HUM);
+        $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $compare::TRESH_CLOUDS);
+        $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $compare::TRESH_CLOUDS);
         // THESE VALUES ARE NOW OFFSET VALUES!
-
-        dd($compareData, $responseArray);
 
         // Assign points on the city that has the lowest offset
         $compareData['city1score'] = 0;
         $compareData['city2score'] = 0;
 
-        // TODO: Mettre les points dans le service en const
-        $compare->assignPoints($temp1, $temp2, $compareData, 20);
-        $compare->assignPoints($hum1, $hum2, $compareData, 15);
-        $compare->assignPoints($clouds1, $clouds2, $compareData, 10);
+        $compare->assignPoints($temp1, $temp2, $compareData, $compare::TEMP_POINTS);
+        $compare->assignPoints($hum1, $hum2, $compareData, $compare::HUM_POINTS);
+        $compare->assignPoints($clouds1, $clouds2, $compareData, $compare::CLOUDS_POINTS);
 
         // Determine the winner and the loser
         $compare->determineWinLose($compareData, $responseArray);
 
-        // dd(get_defined_vars());
-
         // Formating to make it readable by the front-end
         $responseArray['citiestoday'] = array(
-            array("score" => $responseArray['city1today']),
-            array("score" => $responseArray['city2today']),
+            array($responseArray['city1today']),
+            array($responseArray['city2today']),
         );
 
-        // unset($responseArray['city1today'], $responseArray['city2today']); // Removing previous operations variables that where created
-
+        // dd(get_defined_vars());
         return $this->json($responseArray);
     }
 }
