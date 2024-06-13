@@ -118,7 +118,6 @@ class ApiController extends AbstractController
         $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $compare::TRESH_HUM);
         $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $compare::TRESH_CLOUDS);
         $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $compare::TRESH_CLOUDS);
-        // THESE VALUES ARE NOW OFFSET VALUES!
 
         // Assign points on the city that has the lowest offset
         $compareData['city1score'] = 0;
