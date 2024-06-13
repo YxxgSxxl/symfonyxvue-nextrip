@@ -25,10 +25,63 @@ class ApiController extends AbstractController
     public function compare(string $city1, string $city2, HttpClientInterface $client, CompareService $compare, UtilityService $utility): JsonResponse
     {
         // This array returns API call response in the good format
-        $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
-        $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => 10, 'clouds' => null, 'wind' => null];
-        $responseArray['citywinner'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null, 'windavg' => null];
-        $responseArray['cityloser'] = ['name' => null, 'country' => null, 'score' => null, 'tempavg' => null, 'humavg' => null, 'cloudsavg' => null, 'windavg' => null];
+        $responseArray = array();
+        // $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
+        $utility->constructCityResponseArray(
+            $responseArray,
+            'city1today',
+            [
+                'icon' => null,
+                'name' => null,
+                'country' => null,
+                'temp' => null,
+                'humidity' => null,
+                'clouds' => null,
+                'wind' => null
+            ]
+        );
+        $utility->constructCityResponseArray(
+            $responseArray,
+            'city2today',
+            [
+                'icon' => null,
+                'name' => null,
+                'country' => null,
+                'temp' => null,
+                'humidity' => null,
+                'clouds' => null,
+                'wind' => null
+            ]
+        );
+
+        $utility->constructCityResponseArray(
+            $responseArray,
+            'citywinner',
+            [
+                'name' => null,
+                'country' => null,
+                'score' => null,
+                'tempavg' => null,
+                'humavg' => null,
+                'cloudsavg' => null,
+                'windavg' => null
+            ]
+        );
+
+        $utility->constructCityResponseArray(
+            $responseArray,
+            'cityloser',
+            [
+                'name' => null,
+                'country' => null,
+                'score' => null,
+                'tempavg' => null,
+                'humavg' => null,
+                'cloudsavg' => null,
+                'windavg' => null
+            ]
+        );
+
         $compareData = array(); // This array is only used in the algorythm
 
         // First API calls

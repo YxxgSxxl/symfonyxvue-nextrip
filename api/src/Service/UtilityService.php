@@ -68,4 +68,9 @@ class UtilityService
             'wind' => $compareData['wind']['speed']
         ];
     }
+
+    public function constructCityResponseArray(array &$responseArray, string $responseArrayKey, array $data)
+    {
+        return $responseArray[$responseArrayKey] = [$data];
+    }
 }
