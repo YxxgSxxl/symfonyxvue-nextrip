@@ -38,10 +38,6 @@ class ApiController extends AbstractController
     #[Route('/api/{city1}/{city2}', name: 'app_api')]
     public function compare(string $city1, string $city2, HttpClientInterface $client, ParameterBagInterface $parameterBag, CompareService $compare, UtilityService $utility): JsonResponse
     {
-        $treshTemp = 27; // Treshold of the wanted temp
-        $treshHum = 60; // Treshold of the wanted humidity
-        $treshClouds = 15; // Treshold of the wanted clouds rate
-
         // This array returns API call response in the good format
         $responseArray['city1today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => null, 'clouds' => null, 'wind' => null];
         $responseArray['city2today'] = ['icon' => null, 'name' => null, 'country' => null, 'temp' => null, 'humidity' => 10, 'clouds' => null, 'wind' => null];
@@ -51,7 +47,6 @@ class ApiController extends AbstractController
 
         // First API calls
         try {
-            // TODO: Faire les appels via le HttpClient
             $getWeather1 = $client->request('GET', $utility->getWeatherUrl('weather', $city1, $this->apiKey, $this->apiBaseUrl))->toArray();
             $getWeather2 = $client->request('GET', $utility->getWeatherUrl('weather', $city2, $this->apiKey, $this->apiBaseUrl))->toArray();
         } catch (Exception $e) {
@@ -68,14 +63,13 @@ class ApiController extends AbstractController
 
         $compareData = ['city1' => $getWeather1, 'city2' => $getWeather2];
 
-        $utility->constructResponseArray('city1today', $compareData['city1'], $responseArray);
+        $utility->constructCityTodayResponseArray('city1today', $compareData['city1'], $responseArray);
 
-        $utility->constructResponseArray('city2today', $compareData['city2'], $responseArray);
+        $utility->constructCityTodayResponseArray('city2today', $compareData['city2'], $responseArray);
 
 
         // Second API calls
         try {
-            // TODO: Faire les appels via le HttpClient
             $getCity1WeatherUrl = $client->request('GET', $utility->getWeatherFullUrl('forecast', $compareData['city1'], $this->apiKey, $this->apiBaseUrl))->toArray();
             $getCity2WeatherUrl = $client->request('GET', $utility->getWeatherFullUrl('forecast', $compareData['city2'], $this->apiKey, $this->apiBaseUrl))->toArray();
         } catch (Exception $e) {
@@ -85,17 +79,13 @@ class ApiController extends AbstractController
 
         $compareData = ['city1' => $getWeather1, 'city2' => $getWeather2, 'city1full' => $getCity1WeatherUrl, 'city2full' => $getCity2WeatherUrl];
 
-        dd($compareData, $responseArray, $city1, $city2);
 
         // if ($compareData[0]->name != $compareData[2]->city->name || $compareData[1]->name != $compareData[3]->city->name) {
         //     return null; // error
         // }
 
         // Algorythm part
-        $listSize = count($compareData[2]->list); // value size of the weather list
-        $compareData['city1full'] = $compareData[2];
-        $compareData['city2full'] = $compareData[3];
-
+        $listSize = count($compareData['city1full']['list']); // value size of the weather list
         $temp1 = 0; // Total temp value of 1st city
         $temp2 = 0; // Total temp value of 2nd city
         $hum1 = 0; // Total humidity value of 1st city
@@ -120,9 +110,8 @@ class ApiController extends AbstractController
         $compareData['total'] = ['temp1' => $temp1, 'temp2' => $temp2, 'hum1' => $hum1, 'hum2' => $hum2, 'clouds1' => $clouds1, 'clouds2' => $clouds2, 'wind1' => $wind1, 'wind2' => $wind2];
 
         // Treatment for every average values
-        foreach ($compareData['average'] as $key => $value) {
-            // TODO: Utiliser le vrai nombre de ligne ($listSize ?)
-            $value = $value / 40; // Calculate all the average
+        foreach ($compareData['total'] as $key => $value) {
+            $value = $value / $listSize; // Calculate all the average
 
             // if total values are below zero
             if ($value < 0) {
@@ -134,19 +123,19 @@ class ApiController extends AbstractController
             $compareData['average'][$key] = $value;
         }
 
-        //dump(memory_get_usage());
-        unset($i, $value, $key); // Removing previous operations variables that where created
-        //dump(memory_get_usage());
+        // dump(memory_get_usage());
 
         // Calculate the offset between the recommanded values and the one that weather has
         // TODO Mettre les tresh idéaux dans le service en const
-        $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $treshTemp);
-        $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $treshTemp);
-        $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $treshHum);
-        $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $treshHum);
-        $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $treshClouds);
-        $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $treshClouds);
+        $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $compare->treshTemp);
+        $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $compare->treshTemp);
+        $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $compare->treshHum);
+        $hum2 = $compare->calculateOffset($compareData['average']['hum2'], $compare->treshHum);
+        $clouds1 = $compare->calculateOffset($compareData['average']['clouds1'], $compare->treshClouds);
+        $clouds2 = $compare->calculateOffset($compareData['average']['clouds2'], $compare->treshClouds);
         // THESE VALUES ARE NOW OFFSET VALUES!
+
+        dd($compareData, $responseArray);
 
         // Assign points on the city that has the lowest offset
         $compareData['city1score'] = 0;

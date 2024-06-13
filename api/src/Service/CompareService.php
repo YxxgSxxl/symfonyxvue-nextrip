@@ -4,6 +4,16 @@ namespace App\Service;
 
 class CompareService
 {
+    public $treshTemp;
+    public $treshHum;
+    public $treshClouds;
+
+    public function __construct(int $treshTemp = 27, int $treshHum = 60, int $treshClouds = 15)
+    {
+        $this->treshTemp = $treshTemp; // Treshold of the wanted temp
+        $this->treshHum = $treshHum; // Treshold of the wanted humidity
+        $this->treshClouds = $treshClouds; // Treshold of the wanted clouds rate
+    }
 
     /**
      * This function calculates the offset of the average
@@ -11,9 +21,9 @@ class CompareService
      * 
      * returns a int/float value.
      */
-    public function calculateOffset(int|float $averageValue, int $amount): int
+    public function calculateOffset(int|float $averageValue, int $tresh): int
     {
-        $averageValue = abs($averageValue - $amount); // Offset of the average
+        $averageValue = abs($averageValue - $tresh); // Offset of the average
         return $averageValue;
     }
 
