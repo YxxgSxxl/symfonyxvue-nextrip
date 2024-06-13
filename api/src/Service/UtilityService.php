@@ -17,17 +17,17 @@ class UtilityService
         ];
     }
 
-    public function getWeatherUrl(string $cityname, $apiBaseUrl, $apiKey): string
+    public function getWeatherUrl(string $queryType, string $cityname, int|string $apiKey, int|string $apiBaseUrl): string
     {
         $getWeatherParams = [
             'q' => $cityname,
             'units' => 'metric',
             'appid' => $apiKey
         ];
-        return $apiBaseUrl . '?' . http_build_query($getWeatherParams);
+        return $apiBaseUrl . $queryType . '?' . http_build_query($getWeatherParams);
     }
 
-    public function getWeatherFullUrl(array $compareDataElement): string
+    public function getWeatherFullUrl(string $queryType, array &$compareDataElement, $apiKey, $apiBaseUrl): string
     {
         $getWeatherParams = [
             'lat' => $compareDataElement['coord']['lat'],
@@ -35,6 +35,6 @@ class UtilityService
             'units' => 'metric',
             'appid' => $apiKey
         ];
-        return $apiBaseUrl . '?' . http_build_query($getWeatherParams);
+        return $apiBaseUrl . $queryType . '?' . http_build_query($getWeatherParams);
     }
 }
