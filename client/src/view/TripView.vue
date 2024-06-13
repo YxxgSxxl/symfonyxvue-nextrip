@@ -7,34 +7,49 @@ import WinnerCard from '../components/WinnerCard.vue' // Win Card component
 import TripCard from '../components/TripCard.vue' // Trip Card component
 
 let title = ref("Research two cities") // H1 tag value
-let isLoading: any = ref(false) // Loading bool
-let search: any = ref(true) // Search bool
-let searched: any = ref(false) // Search done bool
-let error: any = ref("") // Error message value
-let isError: any = ref(false);
-let data_weather: any = ref([]); // Weather data Array
+let isLoading: unknown = ref(false) // Loading bool
+let search: unknown = ref(true) // Search bool
+let searched: unknown = ref(false) // Search done bool
+let error: unknown = ref("") // Error message value
+let isError: unknown = ref(false);
+let data_weather: unknown = ref([]); // Weather data Array
 
 
-async function submitForm(query: any) {
+async function submitForm(query: unknown) {
     search.value = false
     isLoading.value = true
     
     await axios.get(`http://127.0.0.1:8000/api/${query.value[0].value}/${query.value[1].value}`, {
     })
     .then(res => {
-        return res
+      // console.log(res);
+      // if (res.status === 200) {
+      //   console.log();
+        
+      //   return res;
+      // }
+      
+      // if (res.data.error.message) {
+      //   isError.value = true;
+      //   isLoading.value = false;
+      //   searched.value = false;
+      //   error.value = res.data.error.message;
+      //   console.log(res.data.error.message);
+      // }
+      
+      return res;
     })  
     .then(json => {
         isLoading.value = false
         searched.value = true
 
       // ERROR HANDLING --> If the cities entered are the same
-      if (query.value[0].value.toLowerCase() == query.value[1].value.toLowerCase()) {
-        isError.value = true
-        isLoading.value = false
-        searched.value = false
-        error.value = "Please, don't insert the same city name twice"
-      }
+      // if (query.value[0].value.toLowerCase() == query.value[1].value.toLowerCase()) {
+      //   isError.value = true
+      //   isLoading.value = false
+      //   searched.value = false
+      //   error.value = "Please, don't insert the same city name twice"
+      // }
 
         data_weather.value = json
         title.value = "Results"
@@ -45,10 +60,9 @@ async function submitForm(query: any) {
         isError.value = true
         isLoading.value = false
         error.value = err
-
+        
         // More informations about the error (Debugging)
         console.log(err.toJSON());
-        
     })
 }
 </script>

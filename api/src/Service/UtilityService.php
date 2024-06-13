@@ -17,6 +17,12 @@ class UtilityService
         $this->apiKey = $this->apiConfig['secret'];
     }
 
+    /**
+     * This function is a query builder that formats
+     * the URL corretly to be used in the front-end app.
+     * 
+     * returns a full API call URL.
+     */
     public function getWeatherUrl(string $queryType, string $cityname, int|string $apiKey, int|string $apiBaseUrl): string
     {
         $getWeatherParams = [
@@ -27,6 +33,12 @@ class UtilityService
         return $apiBaseUrl . $queryType . '?' . http_build_query($getWeatherParams);
     }
 
+    /**
+     * This function is a query builder that formats
+     * the URL corretly to be used in the front-end app.
+     * 
+     * returns a full API call URL.
+     */
     public function getWeatherFullUrl(string $queryType, array &$compareDataElement, $apiKey, $apiBaseUrl): string
     {
         $getWeatherParams = [
@@ -38,6 +50,12 @@ class UtilityService
         return $apiBaseUrl . $queryType . '?' . http_build_query($getWeatherParams);
     }
 
+    /**
+     * This function construct an array for the responseArray
+     * formatted correctly for the front-end to use.
+     * 
+     * returns a array with his key for $responseArray.
+     */
     public function constructCityTodayResponseArray(string $name, array &$compareData, array &$responseArray)
     {
         return $responseArray[$name] = [

@@ -35,9 +35,13 @@ class ApiController extends AbstractController
         try {
             $getWeather1 = $client->request('GET', $utility->getWeatherUrl('weather', $city1, $utility->apiKey, $utility->apiBaseUrl))->toArray();
             $getWeather2 = $client->request('GET', $utility->getWeatherUrl('weather', $city2, $utility->apiKey, $utility->apiBaseUrl))->toArray();
+
+            if ($getWeather1 == $getWeather2) {
+                return new JsonResponse(['error' => ['message' => 'Le nom des villes entrées sont similaires', 'name' => 'Nom similaires']], 409);
+            }
         } catch (Exception $e) {
             // TODO: Gérer toutes les erreurs
-            return new JsonResponse(['error' => ['message' => 'OpenWeather est indisponible']]);
+            return new JsonResponse(['error' => ['message' => 'OpenWeather est indisponible', 'name' => 'API indisponible']], 400);
         }
 
         if (
@@ -64,7 +68,6 @@ class ApiController extends AbstractController
         }
 
         $compareData = ['city1' => $getWeather1, 'city2' => $getWeather2, 'city1full' => $getCity1WeatherUrl, 'city2full' => $getCity2WeatherUrl];
-
 
         // if ($compareData[0]->name != $compareData[2]->city->name || $compareData[1]->name != $compareData[3]->city->name) {
         //     return null; // error

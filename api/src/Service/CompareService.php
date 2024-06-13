@@ -10,14 +10,7 @@ class CompareService
     const HUM_POINTS = 15;
     const TRESH_CLOUDS = 15;
     const CLOUDS_POINTS = 10;
-
-    // public function __construct(int $treshTemp = 27, int $treshHum = 60, int $treshClouds = 15)
-    // {
-    //     $this->treshTemp = $treshTemp; // Treshold of the wanted temp
-    //     $this->treshHum = $treshHum; // Treshold of the wanted humidity
-    //     $this->treshClouds = $treshClouds; // Treshold of the wanted clouds rate
-    // }
-
+    
     /**
      * This function calculates the offset of the average
      * and if the value is below zero, it makes it positive.
