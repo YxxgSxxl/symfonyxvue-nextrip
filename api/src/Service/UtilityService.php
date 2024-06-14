@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UtilityService
 {
-    public array $apiConfig;
+    private array $apiConfig;
     public string $apiBaseUrl;
     public string $apiKey;
 
