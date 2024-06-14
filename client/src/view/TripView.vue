@@ -59,7 +59,7 @@ async function submitForm(query: unknown) {
     .catch(err => {
         isError.value = true
         isLoading.value = false
-        error.value = err
+        error.value = err.message
         
         // More informations about the error (Debugging)
         console.log(err.toJSON());
