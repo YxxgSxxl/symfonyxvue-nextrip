@@ -6,7 +6,7 @@ import TripForm from '../components/TripForm.vue' // Trip Form component
 import WinnerCard from '../components/WinnerCard.vue' // Win Card component
 import TripCard from '../components/TripCard.vue' // Trip Card component
 
-let title = ref("Research two cities") // H1 tag value
+let title: unknown = ref("Research two cities") // H1 tag value
 let isLoading: unknown = ref(false) // Loading bool
 let search: unknown = ref(true) // Search bool
 let searched: unknown = ref(false) // Search done bool
