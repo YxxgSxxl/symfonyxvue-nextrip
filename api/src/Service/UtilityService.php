@@ -19,7 +19,7 @@ class UtilityService
 
     /**
      * This function is a query builder that formats
-     * the URL corretly to be used in the front-end app.
+     * the URL correctly to be used in the front-end app.
      * 
      * returns a full API call URL.
      */
