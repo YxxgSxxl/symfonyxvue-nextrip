@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class CompareService
 {
     const TRESH_TEMP = 27;
@@ -10,6 +12,33 @@ class CompareService
     const HUM_POINTS = 15;
     const TRESH_CLOUDS = 15;
     const CLOUDS_POINTS = 10;
+
+/*    public function ifApiCallIsDeprecated(array &$weatherCall1, array &$weatherCall2)
+    {
+        if (
+            !isset($getWeather1['weather']) ||
+            !isset($getWeather1['weather'][0]['icon']) ||
+            !isset($getWeather1['name']) ||
+            !isset($getWeather1['sys']['country']) ||
+            !isset($getWeather1['main']['temp']) ||
+            !isset($getWeather1['main']['humidity']) ||
+            !isset($getWeather1['clouds']) ||
+            !isset($getWeather1['wind']['speed']) ||
+
+            !isset($getWeather2['weather']) ||
+            !isset($getWeather2['weather'][0]['icon']) ||
+            !isset($getWeather2['name']) ||
+            !isset($getWeather2['sys']['country']) ||
+            !isset($getWeather2['main']['temp']) ||
+            !isset($getWeather2['main']['humidity']) ||
+            !isset($getWeather2['clouds']) ||
+            !isset($getWeather2['wind']['speed'])
+        ) {
+            return new JsonResponse(['error' => ['message' => 'Une erreur est survenue', 'name' => 'Résultat requête API incorect']], 400);
+        }
+
+        return [$weatherCall1, $weatherCall2];
+    }*/
     
     /**
      * This function calculates the offset of the average

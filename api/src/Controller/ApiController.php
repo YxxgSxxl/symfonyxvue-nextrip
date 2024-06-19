@@ -82,7 +82,7 @@ class ApiController extends AbstractController
             ]
         );
 
-        $compareData = array(); // This array is only used in the algorythm
+        $compareData = array(); // This array is only used in the algorithm
 
         // First API calls
         try {
@@ -97,11 +97,29 @@ class ApiController extends AbstractController
             return new JsonResponse(['error' => ['message' => 'OpenWeather est indisponible', 'name' => 'API indisponible']], 400);
         }
 
+        // Verify if the API call received isn't in the good format
+        // $compare->ifApiCallIsDeprecated($getWeather1, $getWeather2);
+
         if (
             !isset($getWeather1['weather']) ||
-            !isset($getWeather1['weather'][0]['icon'])
+            !isset($getWeather1['weather'][0]['icon']) ||
+            !isset($getWeather1['name']) ||
+            !isset($getWeather1['sys']['country']) ||
+            !isset($getWeather1['main']['temp']) ||
+            !isset($getWeather1['main']['humidity']) ||
+            !isset($getWeather1['clouds']) ||
+            !isset($getWeather1['wind']['speed']) ||
+
+            !isset($getWeather2['weather']) ||
+            !isset($getWeather2['weather'][0]['icon']) ||
+            !isset($getWeather2['name']) ||
+            !isset($getWeather2['sys']['country']) ||
+            !isset($getWeather2['main']['temp']) ||
+            !isset($getWeather2['main']['humidity']) ||
+            !isset($getWeather2['clouds']) ||
+            !isset($getWeather2['wind']['speed'])
         ) {
-            // TODO : Error si ya des infos manquantes, ajouter d'autres isset ducoup aussi
+            return new JsonResponse(['error' => ['message' => 'Une erreur est survenue', 'name' => 'Résultat requête API incorect']], 400);
         }
 
         $compareData = ['city1' => $getWeather1, 'city2' => $getWeather2];
