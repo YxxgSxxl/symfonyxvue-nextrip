@@ -119,7 +119,7 @@ class ApiController extends AbstractController
             !isset($getWeather2['clouds']) ||
             !isset($getWeather2['wind']['speed'])
         ) {
-            return new JsonResponse(['error' => ['message' => 'Une erreur est survenue', 'name' => 'Résultat requête API incorect']], 400);
+            return new JsonResponse(['error' => ['message' => 'Une erreur est survenue', 'name' => 'Résultat requête API incorect']], 500);
         }
 
         $compareData = ['city1' => $getWeather1, 'city2' => $getWeather2];
