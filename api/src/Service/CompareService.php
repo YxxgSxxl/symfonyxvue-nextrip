@@ -34,7 +34,7 @@ class CompareService
             !isset($getWeather2['clouds']) ||
             !isset($getWeather2['wind']['speed'])
         ) {
-            return new JsonResponse(['error' => ['message' => 'Une erreur est survenue', 'name' => 'Résultat requête API incorect']], 400);
+            return new JsonResponse(['error' => ['message' => 'Une erreur est survenue', 'name' => 'Résultat requête API incorect']], 500);
         }
 
         return [$weatherCall1, $weatherCall2];
