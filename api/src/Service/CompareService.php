@@ -53,10 +53,10 @@ class CompareService
     }
 
     /**
-     * This function compare wich offset is the lowest
+     * This function compare which offset is the lowest
      * and assigns points to the right array key.
      * 
-     * returns a int value into an array.
+     * returns an int value into an array.
      */
     public function assignPoints(int|float $cityOffset1, int|float $cityOffset2, array &$compareData, int $points): void
     {

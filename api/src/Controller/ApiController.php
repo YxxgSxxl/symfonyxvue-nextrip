@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 use App\Service\CompareService; // Custom service that help comparing datas
-use App\Service\UtilityService; // Custom service to help the algorythm init datas correctly
+use App\Service\UtilityService; // Custom service to help the algorithm init data correctly
 
 class ApiController extends AbstractController
 {
@@ -144,7 +144,7 @@ class ApiController extends AbstractController
         //     return null; // error
         // }
 
-        // Algorythm part
+        // Algorithm part
         $listSize = count($compareData['city1full']['list']); // value size of the weather list
         $temp1 = 0; // Total temp value of 1st city
         $temp2 = 0; // Total temp value of 2nd city
@@ -185,7 +185,7 @@ class ApiController extends AbstractController
 
         // dump(memory_get_usage());
 
-        // Calculate the offset between the recommanded values and the one that weather has
+        // Calculate the offset between the recommended values and the one that weather has
         $temp1 = $compare->calculateOffset($compareData['average']['temp1'], $compare::TRESH_TEMP);
         $temp2 = $compare->calculateOffset($compareData['average']['temp2'], $compare::TRESH_TEMP);
         $hum1 = $compare->calculateOffset($compareData['average']['hum1'], $compare::TRESH_HUM);
